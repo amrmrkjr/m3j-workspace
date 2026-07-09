@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>opencode setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <script>
+    if (localStorage.getItem("theme") === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  </script>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">opencode setup</a>
+    <div class="nav-links">
+      <a href="/" class="active">home</a>
+      <a href="setup.html">setup</a>
+      <a href="reference.html">reference</a>
+      <button id="theme-toggle" aria-label="toggle theme">☾</button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero animate-in">
+      <h1><span>opencode</span> setup</h1>
+      <p>Optimized configuration, performance tuning, and best practices for running OpenCode. Clean, minimal, and straight to the point.</p>
+    </section>
+
+    <section>
+      <div class="section-title">guide</div>
+      <div class="card-grid">
+        <a href="setup.html" class="card animate-in">
+          <span class="card-icon">⚙</span>
+          <h3>setup</h3>
+          <p>Configuration optimization, database maintenance, skills and agents management, and performance tuning.</p>
+        </a>
+        <a href="reference.html" class="card animate-in">
+          <span class="card-icon">⎈</span>
+          <h3>reference</h3>
+          <p>Annotated config files, JSON schema, environment variables, and command reference.</p>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">highlights</div>
+      <div class="list">
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">database optimization</div>
+            <div class="desc">Vacuum opencode.db, manage WAL size, reduce on-disk footprint by up to 50%.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">config compaction</div>
+            <div class="desc">Minimize token overhead, disable unused diagnostics, trim tool output in prompts.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">skills &amp; agents</div>
+            <div class="desc">Per-project skills isolation, agent templates, and proper .gitignore workflows.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">session overhead</div>
+            <div class="desc">Reduced prompt context from ~19K to ~8K tokens through careful config and agent scoping.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>opencode setup guide</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

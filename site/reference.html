@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>reference — opencode setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <script>
+    if (localStorage.getItem("theme") === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  </script>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo">opencode setup</a>
+    <div class="nav-links">
+      <a href="/">home</a>
+      <a href="setup.html">setup</a>
+      <a href="reference.html" class="active">reference</a>
+      <button id="theme-toggle" aria-label="toggle theme">☾</button>
+    </div>
+  </nav>
+
+  <main>
+    <h1 class="animate-in" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">reference</h1>
+    <p class="section-sub animate-in">Annotated config files and key paths.</p>
+
+    <section>
+      <div class="section-title animate-in">config</div>
+      <h2 class="section-heading animate-in">global config</h2>
+      <p class="section-sub animate-in"><span class="tag">~/.config/opencode/opencode.jsonc</span></p>
+      <pre class="animate-in">{
+  // Compaction — trim session context automatically
+  "compaction": {
+    "enabled": true,
+    "max_context_tokens": 8000,
+    "strategy": "balanced"
+  },
+
+  // Tool output — avoid noise in prompts
+  "tool_output": {
+    "max_length": 500,
+    "truncation": "head"
+  },
+
+  // Permission — accept all non-destructive operations
+  "permission": "allow",
+
+  // Small model for cheap mechanical tasks
+  "small_model": "claude-haiku-3-5-20241022",
+
+  // Disable unused features
+  "lsp": false,
+  "formatter": false,
+
+  // Project references for context
+  "references": {
+    "site": {
+      "name": "site",
+      "path": "./site"
+    }
+  }
+}</pre>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">paths</div>
+      <h2 class="section-heading animate-in">key locations</h2>
+      <div class="list">
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">database</div>
+            <div class="desc"><span class="tag">~/.local/share/opencode/opencode.db</span></div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">global config</div>
+            <div class="desc"><span class="tag">~/.config/opencode/opencode.jsonc</span></div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">project config</div>
+            <div class="desc"><span class="tag">./opencode.json</span></div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">global agents</div>
+            <div class="desc"><span class="tag">~/.config/opencode/agents/</span></div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">project agents</div>
+            <div class="desc"><span class="tag">./.opencode/agents/</span></div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">skills</div>
+            <div class="desc"><span class="tag">./.agents/skills/</span></div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">session data</div>
+            <div class="desc"><span class="tag">~/.local/share/opencode/</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">git</div>
+      <h2 class="section-heading animate-in">.gitignore</h2>
+      <p class="section-sub animate-in">Keep runtime artifacts out of version control.</p>
+      <pre class="animate-in"># OpenCode
+opencode.db
+opencode.db-wal
+opencode.db-shm
+
+# Session data
+.superpowers/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db</pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>opencode setup guide</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
