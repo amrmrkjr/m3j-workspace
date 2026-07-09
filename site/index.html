@@ -10,46 +10,57 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
   <script>
-    if (localStorage.getItem("theme") === "light") {
+    if (localStorage.getItem("theme") === "light")
       document.documentElement.setAttribute("data-theme", "light");
-    }
   </script>
 </head>
 <body>
   <nav>
-    <a href="/" class="logo">opencode setup</a>
+    <a href="/" class="logo"><span>opencode</span> setup</a>
     <div class="nav-links">
       <a href="/" class="active">home</a>
       <a href="setup.html">setup</a>
       <a href="reference.html">reference</a>
+      <a href="markdown.html">markdown</a>
       <button id="theme-toggle" aria-label="toggle theme">☾</button>
     </div>
   </nav>
 
   <main>
-    <section class="hero animate-in">
-      <h1><span>opencode</span> setup</h1>
-      <p>Optimized configuration, performance tuning, and best practices for running OpenCode. Clean, minimal, and straight to the point.</p>
+    <section class="hero">
+      <h1 class="animate-in"><span class="gradient">optimized</span><br>opencode,<br>zero fluff</h1>
+      <p class="animate-in">Configuration tuning, performance optimization, and best practices for running OpenCode. Clean, minimal, built from real sessions.</p>
+      <p class="animate-in" style="margin-top: 1.5rem;">
+        <a href="setup.html" class="btn">get started &rarr;</a>
+        <a href="reference.html" class="btn btn-outline" style="margin-left: 0.5rem;">reference</a>
+      </p>
     </section>
 
+    <hr class="accent-divider animate-in">
+
     <section>
-      <div class="section-title">guide</div>
+      <div class="section-title animate-in">guide</div>
       <div class="card-grid">
         <a href="setup.html" class="card animate-in">
           <span class="card-icon">⚙</span>
           <h3>setup</h3>
-          <p>Configuration optimization, database maintenance, skills and agents management, and performance tuning.</p>
+          <p>Database maintenance, config optimization, skills and agents management, session overhead reduction.</p>
         </a>
         <a href="reference.html" class="card animate-in">
           <span class="card-icon">⎈</span>
           <h3>reference</h3>
-          <p>Annotated config files, JSON schema, environment variables, and command reference.</p>
+          <p>Annotated config files, key paths, environment variables, and .gitignore patterns.</p>
+        </a>
+        <a href="markdown.html" class="card animate-in">
+          <span class="card-icon">#</span>
+          <h3>markdown</h3>
+          <p>Essential markdown reference — formatting, code blocks, tables, and everything you need for docs.</p>
         </a>
       </div>
     </section>
 
     <section>
-      <div class="section-title">highlights</div>
+      <div class="section-title animate-in">highlights</div>
       <div class="list">
         <div class="list-item animate-in">
           <div class="dot"></div>

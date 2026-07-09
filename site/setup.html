@@ -10,30 +10,34 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
   <script>
-    if (localStorage.getItem("theme") === "light") {
+    if (localStorage.getItem("theme") === "light")
       document.documentElement.setAttribute("data-theme", "light");
-    }
   </script>
 </head>
 <body>
   <nav>
-    <a href="/" class="logo">opencode setup</a>
+    <a href="/" class="logo"><span>opencode</span> setup</a>
     <div class="nav-links">
       <a href="/">home</a>
       <a href="setup.html" class="active">setup</a>
       <a href="reference.html">reference</a>
+      <a href="markdown.html">markdown</a>
       <button id="theme-toggle" aria-label="toggle theme">☾</button>
     </div>
   </nav>
 
   <main>
-    <h1 class="animate-in" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">setup</h1>
-    <p class="section-sub animate-in">Optimization recipes and best practices for running OpenCode.</p>
+    <div class="page-header animate-in">
+      <h1>setup</h1>
+      <p>Optimization recipes and best practices for running OpenCode.</p>
+    </div>
+
+    <hr class="accent-divider animate-in">
 
     <section>
       <div class="section-title animate-in">database</div>
       <h2 class="section-heading animate-in">maintenance</h2>
-      <p class="section-sub animate-in">The SQLite database can grow quickly. Regular vacuuming reduces disk usage and improves performance.</p>
+      <p class="section-sub animate-in">The SQLite database grows quickly. Regular vacuuming reduces disk usage and keeps things fast.</p>
       <pre class="animate-in"># Vacuum the database
 sqlite3 ~/.local/share/opencode/opencode.db "VACUUM;"
 
@@ -47,7 +51,7 @@ sqlite3 ~/.local/share/opencode/opencode.db "PRAGMA wal_checkpoint(TRUNCATE);"</
     <section>
       <div class="section-title animate-in">configuration</div>
       <h2 class="section-heading animate-in">opencode.jsonc</h2>
-      <p class="section-sub animate-in">Key flags for a lean, fast config. Trim tool output, disable unused diagnostics, set a budget-friendly model.</p>
+      <p class="section-sub animate-in">Key flags for a lean, fast config. Trim tool output, disable unused features, set a budget model.</p>
       <pre class="animate-in">{
   "compaction": {
     "enabled": true,
@@ -90,7 +94,7 @@ my-project/
     <section>
       <div class="section-title animate-in">session overhead</div>
       <h2 class="section-heading animate-in">token optimization</h2>
-      <p class="section-sub animate-in">Every skill and agent scanned at session start adds tokens. Keep only what you need for the task at hand.</p>
+      <p class="section-sub animate-in">Every skill and agent scanned at session start adds tokens. Keep only what you need.</p>
       <pre class="animate-in"># Before: global skills auto-scanned (~19K tokens)
 # After: per-project skills only (~8K tokens)
 
@@ -98,7 +102,7 @@ Optimizations applied:
 • Moved skills from ~/.agents/skills/ to .agents/skills/
 • Moved agents to .opencode/agents/
 • Set skills.paths in opencode.json
-• Global ~/.config/opencode/skills symlink removed</pre>
+• Removed global ~/.config/opencode/skills symlink</pre>
     </section>
   </main>
 

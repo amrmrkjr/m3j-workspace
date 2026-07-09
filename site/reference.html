@@ -10,25 +10,29 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
   <script>
-    if (localStorage.getItem("theme") === "light") {
+    if (localStorage.getItem("theme") === "light")
       document.documentElement.setAttribute("data-theme", "light");
-    }
   </script>
 </head>
 <body>
   <nav>
-    <a href="/" class="logo">opencode setup</a>
+    <a href="/" class="logo"><span>opencode</span> setup</a>
     <div class="nav-links">
       <a href="/">home</a>
       <a href="setup.html">setup</a>
       <a href="reference.html" class="active">reference</a>
+      <a href="markdown.html">markdown</a>
       <button id="theme-toggle" aria-label="toggle theme">☾</button>
     </div>
   </nav>
 
   <main>
-    <h1 class="animate-in" style="font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem;">reference</h1>
-    <p class="section-sub animate-in">Annotated config files and key paths.</p>
+    <div class="page-header animate-in">
+      <h1>reference</h1>
+      <p>Annotated config files and key paths.</p>
+    </div>
+
+    <hr class="accent-divider animate-in">
 
     <section>
       <div class="section-title animate-in">config</div>
