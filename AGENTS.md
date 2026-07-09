@@ -50,3 +50,5 @@ These patterns produce the best results in this repo:
 5. **Keep site/ pages in sync** — all pages share nav order (home → setup → reference) and the same nav partial structure. When adding or removing a page, update every HTML file's nav and the homepage card grid.
 
 6. **Use per-project skills path** — `.agents/skills/` not `~/.agents/skills/`. This keeps configs isolated and manageable.
+
+7. **Dispatch m3j-* sub-agents for specialized work** — the `.opencode/agents/` directory has dedicated agents for design, debugging, writing, planning, testing, deployment, research, execution, engineering, and documents. When a task fits a domain, dispatch the matching m3j-* agent instead of doing it yourself.
