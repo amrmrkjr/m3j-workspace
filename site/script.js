@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
-  animateIn();
   liveClock();
 });
 
@@ -24,28 +23,14 @@ function initTheme() {
   });
 }
 
-/* ── One-shot fade-up on load ── */
-function animateIn() {
-  const els = document.querySelectorAll(".animate-in");
-  els.forEach((el, i) => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(12px)";
-    requestAnimationFrame(() => {
-      el.style.transition = "opacity 0.5s ease, transform 0.5s ease";
-      el.style.opacity = "1";
-      el.style.transform = "translateY(0)";
-      el.style.transitionDelay = `${i * 0.05}s`;
-    });
-  });
-}
-
 /* ── Live clock in footer ── */
 function liveClock() {
   const footer = document.querySelector("footer");
   if (!footer) return;
   const clock = document.createElement("span");
   clock.style.marginLeft = "0.75rem";
-  clock.style.opacity = "0.5";
+  clock.style.opacity = "0.4";
+  clock.style.fontSize = "0.75rem";
   footer.appendChild(clock);
   function tick() {
     const now = new Date();

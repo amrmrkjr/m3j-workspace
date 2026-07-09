@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>markdown — opencode setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <script>
+    if (localStorage.getItem("theme") === "light")
+      document.documentElement.setAttribute("data-theme", "light");
+  </script>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo"><span>opencode</span> setup</a>
+    <div class="nav-links">
+      <a href="/">home</a>
+      <a href="setup.html">setup</a>
+      <a href="reference.html">reference</a>
+      <a href="markdown.html" class="active">markdown</a>
+      <button id="theme-toggle" aria-label="toggle theme">☾</button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="page-header animate-in">
+      <h1>markdown</h1>
+      <p>Essential markdown reference for writing docs, prompts, and communication.</p>
+    </div>
+
+    <hr class="accent-divider animate-in">
+
+    <!-- Headings -->
+    <section>
+      <div class="section-title animate-in">basics</div>
+      <h2 class="section-heading animate-in">headings</h2>
+      <p class="section-sub animate-in">Use <span class="tag">#</span> to <span class="tag">######</span> for six levels of headings.</p>
+      <pre class="animate-in"># Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6</pre>
+    </section>
+
+    <!-- Text -->
+    <section>
+      <h2 class="section-heading animate-in">text formatting</h2>
+      <pre class="animate-in">**bold text**
+*italic text*
+~~strikethrough~~
+`inline code`
+&gt; blockquote</pre>
+    </section>
+
+    <!-- Lists -->
+    <section>
+      <div class="section-title animate-in">lists</div>
+      <h2 class="section-heading animate-in">unordered &amp; ordered</h2>
+      <pre class="animate-in">- item one
+- item two
+  - nested item
+  - nested item
+
+1. first
+2. second
+3. third</pre>
+    </section>
+
+    <!-- Code -->
+    <section>
+      <div class="section-title animate-in">code</div>
+      <h2 class="section-heading animate-in">code blocks</h2>
+      <p class="section-sub animate-in">Use triple backticks with an optional language identifier for syntax highlighting.</p>
+      <pre class="animate-in">```python
+def hello():
+    print("hello, world")
+```</pre>
+      <p class="section-sub animate-in" style="margin-top: 1rem;">Or indent with four spaces for an inline code block.</p>
+      <pre class="animate-in">    # this is an indented code block
+    echo "hello"</pre>
+    </section>
+
+    <!-- Links & Images -->
+    <section>
+      <div class="section-title animate-in">media</div>
+      <h2 class="section-heading animate-in">links &amp; images</h2>
+      <pre class="animate-in">[link text](https://example.com)
+
+![alt text](image.png)</pre>
+    </section>
+
+    <!-- Tables -->
+    <section>
+      <div class="section-title animate-in">tables</div>
+      <h2 class="section-heading animate-in">tables</h2>
+      <p class="section-sub animate-in">Separate columns with pipes <span class="tag">|</span> and headers with dashes <span class="tag">-</span>.</p>
+      <pre class="animate-in">| Name  | Role     |
+|-------|----------|
+| Alice | Engineer |
+| Bob   | Designer |</pre>
+    </section>
+
+    <!-- Task lists -->
+    <section>
+      <div class="section-title animate-in">tasks</div>
+      <h2 class="section-heading animate-in">task lists</h2>
+      <p class="section-sub animate-in">Use <span class="tag">[ ]</span> and <span class="tag">[x]</span> for checkable items.</p>
+      <pre class="animate-in">- [x] completed task
+- [ ] pending task
+- [ ] another todo</pre>
+    </section>
+
+    <!-- Horizontal rule -->
+    <section>
+      <div class="section-title animate-in">separators</div>
+      <h2 class="section-heading animate-in">horizontal rules</h2>
+      <p class="section-sub animate-in">Three or more dashes, asterisks, or underscores.</p>
+      <pre class="animate-in">---
+***
+___</pre>
+    </section>
+
+    <!-- Escaping -->
+    <section>
+      <div class="section-title animate-in">escaping</div>
+      <h2 class="section-heading animate-in">escaping special chars</h2>
+      <p class="section-sub animate-in">Prefix with a backslash to render literal markdown characters.</p>
+      <pre class="animate-in">\*not italic\*
+\`not code\`
+\[not a link\]()</pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>opencode setup guide</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
