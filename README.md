@@ -13,10 +13,10 @@ site/               # static reference guide (open site/index.html)
 
 ## Site
 
-A lean, no-build reference guide covering database maintenance, config compaction, per-project agents/skills, and token optimization.
+A lean, no-build reference guide covering database maintenance, config compaction, and per-project agents/skills.
 
 [Open the guide](site/index.html) directly in a browser.
 
 ## Skills
 
-Skills are organized under `.agents/skills/` and loaded per-project via `opencode.json`. This keeps session context lean (~8K tokens vs ~19K with global loading).
+Skills are organized under `.agents/skills/` and loaded per-project via `opencode.json` to keep things isolated and clean.

@@ -49,4 +49,4 @@ These patterns produce the best results in this repo:
 
 5. **Keep site/ pages in sync** — all pages share nav order (home → setup → reference) and the same nav partial structure. When adding or removing a page, update every HTML file's nav and the homepage card grid.
 
-6. **Use per-project skills path** — `.agents/skills/` not `~/.agents/skills/`. This keeps session context at ~8K tokens instead of ~19K.
+6. **Use per-project skills path** — `.agents/skills/` not `~/.agents/skills/`. This keeps configs isolated and manageable.

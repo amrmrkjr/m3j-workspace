@@ -51,7 +51,7 @@ sqlite3 ~/.local/share/opencode/opencode.db "PRAGMA wal_checkpoint(TRUNCATE);"</
     <section>
       <div class="section-title animate-in">configuration</div>
       <h2 class="section-heading animate-in">opencode.jsonc</h2>
-      <p class="section-sub animate-in">Key flags for a lean, fast config. Trim tool output, disable unused features, set a budget model.</p>
+      <p class="section-sub animate-in">Key flags for a lean config. Trim tool output, disable unused features.</p>
       <pre class="animate-in">{
   "compaction": {
     "enabled": true,
@@ -75,7 +75,7 @@ sqlite3 ~/.local/share/opencode/opencode.db "PRAGMA wal_checkpoint(TRUNCATE);"</
     <section>
       <div class="section-title animate-in">agents &amp; skills</div>
       <h2 class="section-heading animate-in">per-project isolation</h2>
-      <p class="section-sub animate-in">Keep skills and agents local to each project to reduce context overhead and avoid global pollution.</p>
+      <p class="section-sub animate-in">Keep skills and agents local to each project to avoid global pollution and keep configs clean.</p>
       <pre class="animate-in"># Project structure
 my-project/
 ├── .agents/skills/    # project-specific skills
@@ -91,19 +91,6 @@ my-project/
 }</pre>
     </section>
 
-    <section>
-      <div class="section-title animate-in">session overhead</div>
-      <h2 class="section-heading animate-in">token optimization</h2>
-      <p class="section-sub animate-in">Every skill and agent scanned at session start adds tokens. Keep only what you need.</p>
-      <pre class="animate-in"># Before: global skills auto-scanned (~19K tokens)
-# After: per-project skills only (~8K tokens)
-
-Optimizations applied:
-• Moved skills from ~/.agents/skills/ to .agents/skills/
-• Moved agents to .opencode/agents/
-• Set skills.paths in opencode.json
-• Removed global ~/.config/opencode/skills symlink</pre>
-    </section>
   </main>
 
   <footer>

@@ -1,6 +1,6 @@
 # opencode setup
 
-A lean reference guide for running OpenCode — configuration tuning, database maintenance, token optimization, and agent/skills management. Built from real sessions, not theory.
+A lean reference guide for running OpenCode — configuration tuning, database maintenance, and agent/skills management. Built from real sessions, not theory.
 
 ## Quick start
 
@@ -14,19 +14,19 @@ open site/index.html
 
 | Page | What it covers |
 |---|---|
-| **Setup** | SQLite vacuum + WAL checkpointing, config flags for token reduction, per-project agents/skills isolation, session overhead from ~19K→~8K tokens |
+| **Setup** | SQLite vacuum + WAL checkpointing, config compaction, per-project agents/skills isolation |
 | **Reference** | Annotated global config with explanations, all key file paths, `.gitignore` patterns for OpenCode artifacts |
 
 ## Why this exists
 
-OpenCode's defaults are generous — global skills, verbose tool output, full LSP, unchecked DB growth. After a few weeks of regular use, the session context can hit 19K+ tokens before you type a word, and the SQLite db can bloat past 100MB.
+OpenCode's defaults are generous — global skills, verbose tool output, full LSP, unchecked DB growth. The SQLite db can bloat past 100MB after a few weeks.
 
 This guide documents the knobs worth turning.
 
 ## Key optimizations
 
 - **Vacuum the DB** — `sqlite3 ~/.local/share/opencode/opencode.db "VACUUM;"` reclaims space from deleted session data
-- **Disable LSP + formatter** — saves ~3-4K tokens per session if you don't use them
+- **Disable LSP + formatter** — trims unnecessary processing if you don't use them
 - **Per-project skills** — move from `~/.agents/skills/` to `.agents/skills/` and reference via `opencode.json`
 - **Budget model** — set `model.small` for cheap mechanical tasks instead of defaulting to Sonnet
 
