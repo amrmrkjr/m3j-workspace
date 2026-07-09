@@ -1,0 +1,7 @@
+.agents/*
+!.agents/skills/
+!.agents/skills/**
+.playwright-mcp/
+site-screenshot.png
+node_modules/
+skills-lock.json

@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
+  initReveal();
   liveClock();
 });
 
@@ -7,13 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function initTheme() {
   const btn = document.getElementById("theme-toggle");
   if (!btn) return;
-
   const saved = localStorage.getItem("theme");
   if (saved === "light") {
     document.documentElement.setAttribute("data-theme", "light");
     btn.textContent = "☀";
   }
-
   btn.addEventListener("click", () => {
     const html = document.documentElement;
     const isLight = html.getAttribute("data-theme") === "light";
@@ -21,6 +20,24 @@ function initTheme() {
     localStorage.setItem("theme", isLight ? "dark" : "light");
     btn.textContent = isLight ? "☾" : "☀";
   });
+}
+
+/* ── Scroll reveal with IntersectionObserver ── */
+function initReveal() {
+  const els = document.querySelectorAll(".animate-in");
+  if (!els.length) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("visible");
+          observer.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+  );
+  els.forEach((el) => observer.observe(el));
 }
 
 /* ── Live clock in footer ── */
