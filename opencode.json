@@ -5,5 +5,11 @@
     "paths": [".agents/skills"]
   },
 
-  "instructions": ["AGENTS.md"]
+  "instructions": ["AGENTS.md"],
+
+  "plugin": [
+    "opencode-autotitle",
+    "envsitter-guard",
+    "opencode-command-inject"
+  ]
 }
