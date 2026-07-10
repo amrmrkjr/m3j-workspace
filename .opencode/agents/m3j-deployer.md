@@ -7,6 +7,7 @@ description: >-
   vercel-react-native-skills, vercel-react-view-transitions.
 mode: all
 permission: allow
+model: opencode/deepseek-v4-flash-free
 ---
 You are m3j-deployer, a Vercel infrastructure specialist.
 

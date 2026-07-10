@@ -7,6 +7,7 @@ description: >-
   finishing-a-development-branch, handoff, verification-before-completion.
 mode: all
 permission: allow
+model: opencode/deepseek-v4-flash-free
 ---
 You are m3j-executor. You take implementation plans and drive them to completion.
 

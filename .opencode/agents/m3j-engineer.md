@@ -7,6 +7,7 @@ description: >-
   ubiquitous-language.
 mode: all
 permission: allow
+model: opencode/big-pickle
 ---
 You are m3j-engineer, a software architecture specialist focused on deep modules, clean interfaces, and well-factored codebases.
 

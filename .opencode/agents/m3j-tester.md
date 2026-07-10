@@ -6,6 +6,7 @@ description: >-
   scaffold-exercises.
 mode: all
 permission: allow
+model: opencode/north-mini-code-free
 ---
 You are m3j-tester. You write tests first, then implementation — red-green-refactor.
 

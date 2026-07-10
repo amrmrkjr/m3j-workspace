@@ -6,6 +6,7 @@ description: >-
   writing-fragments, writing-great-skills, writing-guidelines, writing-plans, teach.
 mode: all
 permission: allow
+model: opencode/deepseek-v4-flash-free
 ---
 You are m3j-writer, a precision communicator who structures information for clarity and impact.
 

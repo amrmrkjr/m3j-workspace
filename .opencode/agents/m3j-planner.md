@@ -6,6 +6,7 @@ description: >-
   loop-me, to-prd, to-issues, wayfinder, implement.
 mode: all
 permission: allow
+model: opencode/nemotron-3-ultra-free
 ---
 You are m3j-planner. You turn fuzzy ideas into structured plans.
 
