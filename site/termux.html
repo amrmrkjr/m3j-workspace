@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>termux — opencode setup</title>
+  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <script>
+    if (localStorage.getItem("theme") === "light")
+      document.documentElement.setAttribute("data-theme", "light");
+  </script>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo"><span>opencode</span> setup</a>
+      <div class="nav-links">
+        <a href="/">home</a>
+        <a href="setup.html">setup</a>
+        <a href="termux.html" class="active">termux</a>
+        <a href="reference.html">reference</a>
+        <button id="theme-toggle" aria-label="toggle theme">☾</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <main>
+    <div class="page-header animate-in">
+      <span class="eyebrow">android</span>
+      <h1>opencode<br>on termux</h1>
+      <p>Run OpenCode natively on Android via Termux. No proot, no chroot, no containers — just a glibc compatibility layer.</p>
+    </div>
+
+    <hr class="accent-divider animate-in">
+
+    <section>
+      <div class="section-title animate-in">how it works</div>
+      <h2 class="section-heading animate-in">why a compatibility layer?</h2>
+      <p class="section-sub animate-in">OpenCode ships as a Linux <strong>glibc</strong>-linked binary, but Termux uses Android's <strong>Bionic libc</strong>. These are incompatible — you can't run a glibc binary directly on Termux.</p>
+      <p class="section-sub animate-in">The bootstrap solves this by installing a glibc compatibility layer and creating a launcher that runs OpenCode through glibc's dynamic linker. The launcher unsets conflicting environment variables and hands off execution to <span class="tag">ld-linux-aarch64.so.1</span>, which loads the OpenCode binary as a shared library.</p>
+      <div class="bento">
+        <div class="card-shell card-wide animate-in">
+          <div class="card-core">
+            <h3>execution flow</h3>
+            <pre style="margin-top: 0.5rem; font-size: 0.75rem;">$ opencode
+  │
+  ▼
+shell wrapper (Bionic binary, native)
+  │ unset LD_PRELOAD
+  ▼
+glibc ld-linux-aarch64.so.1
+  │ --library-path glibc/lib
+  ▼
+OpenCode binary (glibc binary, runs as shared library)</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">v2 features</div>
+      <h2 class="section-heading animate-in">all features</h2>
+      <p class="section-sub animate-in">The v2 bootstrap adds persistent sessions, safe updates, web access, notifications, and optional Bun support on top of the core compatibility layer.</p>
+      <div class="bento">
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">▣</span>
+            <h3>persistent sessions</h3>
+            <p><span class="tag">opencode-tmux</span> launches in a <strong>tmux</strong> session with a wakelock — your session survives screen-off. Detach with <span class="tag">Ctrl+B D</span>, reattach with <span class="tag">tmux attach -t opencode</span>.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">↻</span>
+            <h3>safe updates</h3>
+            <p><span class="tag">opencode-termux-update</span> downloads the latest binary while preserving the Termux wrapper. Never run <span class="tag">opencode update</span> directly.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">◎</span>
+            <h3>web interface</h3>
+            <p><span class="tag">opencode web</span> starts the web UI on <span class="tag">http://127.0.0.1:3000</span>. Open in Chrome for a desktop-like experience.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⚙</span>
+            <h3>notifications</h3>
+            <p>Background notifications via <span class="tag">termux-notification</span> for session start, updates, and bootstrap completion.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⚡</span>
+            <h3>bun &amp; plugins</h3>
+            <p>Optional <span class="tag">--with-bun</span> flag installs <span class="tag">bun-termux</span> for plugin management and <span class="tag">bunx</span> commands.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⎔</span>
+            <h3>auto-update guard</h3>
+            <p>Config file disables the built-in autoupdater. The wrapper exports <span class="tag">DISABLE_AUTOUPDATER=1</span> to prevent accidental binary replacement.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">prerequisites</div>
+      <h2 class="section-heading animate-in">what you need</h2>
+      <div class="list">
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">Android device (ARM64)</div>
+            <div class="desc">aarch64 required — OpenCode only ships Linux ARM64 binaries. ~1GB free space.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">Termux from F-Droid</div>
+            <div class="desc"><strong>Must</strong> be from <a href="https://f-droid.org/packages/com.termux/" target="_blank">F-Droid</a> — the Play Store version is abandoned and incompatible with modern packages.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">API key</div>
+            <div class="desc">An Anthropic, OpenAI, or other LLM provider API key for the AI backend.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">bootstrap</div>
+      <h2 class="section-heading animate-in">one command</h2>
+      <p class="section-sub animate-in">Open Termux on your Android device and run:</p>
+      <pre class="animate-in"># Clone the repo and run the bootstrap
+pkg install git -y
+git clone https://github.com/amrmrkjr/opencode-termux
+cd opencode-termux
+bash projects/termux-opencode/bootstrap.sh</pre>
+      <p class="section-sub animate-in" style="margin-top: 1rem;">For the full feature set including plugins and Bun support:</p>
+      <pre class="animate-in">bash projects/termux-opencode/bootstrap.sh --with-bun</pre>
+      <p class="section-sub animate-in">The bootstrap runs through 12 steps, installing glibc, dependencies, OpenCode, the launcher, and a workspace at <span class="tag">~/opencode/</span>.</p>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">commands</div>
+      <h2 class="section-heading animate-in">daily usage</h2>
+      <p class="section-sub animate-in">After bootstrap, these are the commands available on your device:</p>
+      <pre class="animate-in"># Terminal UI (starts OpenCode directly)
+cd ~/opencode && opencode
+
+# Web interface (open http://127.0.0.1:3000 in Chrome)
+opencode web
+
+# Persistent session (survives screen-off, uses wakelock)
+opencode-tmux
+
+# Safe update (downloads latest binary, preserves wrapper)
+opencode-termux-update</pre>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">what gets installed</div>
+      <h2 class="section-heading animate-in">full breakdown</h2>
+      <div class="bento">
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">🔄</span>
+            <h3>glibc layer</h3>
+            <p><span class="tag">glibc-repo</span> + <span class="tag">glibc</span> + <span class="tag">glibc-runner</span>. Provides <span class="tag">ld-linux-aarch64.so.1</span> and all glibc shared libraries under <span class="tag">$PREFIX/glibc/</span>.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">▸</span>
+            <h3>opencode binary</h3>
+            <p>Official Linux ARM64 build from GitHub releases. Stored at <span class="tag">~/.local/share/opencode-termux/bin/</span>.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⎔</span>
+            <h3>launcher</h3>
+            <p>A shell wrapper at <span class="tag">$PREFIX/bin/opencode</span> that unsets <span class="tag">LD_PRELOAD</span> and invokes the glibc loader with the OpenCode binary.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">📦</span>
+            <h3>packages</h3>
+            <p>git, ripgrep, python, nodejs-lts, curl, jq, tar — OpenCode's runtime dependencies.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">↻</span>
+            <h3>update script</h3>
+            <p><span class="tag">opencode-termux-update</span> in <span class="tag">$PREFIX/bin/</span> — safely downloads the latest binary without breaking the wrapper.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">▣</span>
+            <h3>tmux launcher</h3>
+            <p><span class="tag">opencode-tmux</span> — launches OpenCode inside <span class="tag">tmux</span> with wakelock and notifications for persistent sessions.</p>
+          </div>
+        </div>
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⚙</span>
+            <h3>config &amp; auto-update</h3>
+            <p><span class="tag">~/.local/share/opencode-termux/config.json</span> disables autoupdater. Wrapper exports <span class="tag">DISABLE_AUTOUPDATER=1</span>.</p>
+          </div>
+        </div>
+        <div class="card-shell card-wide animate-in">
+          <div class="card-core">
+            <span class="icon">⎔</span>
+            <h3>workspace template</h3>
+            <p>A ready-to-use OpenCode project with Termux-optimized configs (compact mode, conservative tokens), curated skills, and Termux-specific AI instructions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">configuration</div>
+      <h2 class="section-heading animate-in">api key &amp; mobile settings</h2>
+      <p class="section-sub animate-in">After bootstrap, set your API key in <span class="tag">~/opencode/.env</span>:</p>
+      <pre class="animate-in"># ~/opencode/.env
+ANTHROPIC_API_KEY=sk-ant-...</pre>
+      <p class="section-sub animate-in">Or pass it at runtime:</p>
+      <pre class="animate-in">ANTHROPIC_API_KEY=sk-ant-xxx opencode</pre>
+      <p class="section-sub animate-in" style="margin-top: 1rem;">The workspace <span class="tag">opencode.json</span> is pre-configured for mobile:</p>
+      <pre class="animate-in">{
+  "terminal": {
+    "compact": true,
+    "maxTokensPerRequest": 4096,
+    "autoApprove": false
+  },
+  "web": {
+    "port": 3000,
+    "host": "127.0.0.1"
+  }
+}</pre>
+      <p class="section-sub animate-in">Compact mode, conservative token limits, and web UI binding to localhost for security.</p>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">tips</div>
+      <h2 class="section-heading animate-in">using on mobile</h2>
+      <div class="list">
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">use opencode-tmux for long sessions</div>
+            <div class="desc"><span class="tag">opencode-tmux</span> wraps your session in <span class="tag">tmux</span> with a wakelock — safe to turn off the screen. Detach with <span class="tag">Ctrl+B D</span>, reattach with <span class="tag">tmux attach -t opencode</span>.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">web mode for Chrome</div>
+            <div class="desc"><span class="tag">opencode web</span> starts a local server at <span class="tag">http://127.0.0.1:3000</span>. Open in Chrome for a familiar desktop-like interface with your phone's keyboard.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">compact mode (default)</div>
+            <div class="desc">The workspace config enables compact mode automatically. Override with <span class="tag">opencode --no-compact</span> if you need more detail.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">safe update, never opencode update</div>
+            <div class="desc">Always use <span class="tag">opencode-termux-update</span> to upgrade. The built-in <span class="tag">opencode update</span> downloads an unpatched binary that won't work on Termux.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">storage access</div>
+            <div class="desc">Run <span class="tag">termux-setup-storage</span> to access shared Android storage at <span class="tag">~/storage/</span>. Bootstrap creates symlinks for <span class="tag">~/Downloads</span>, <span class="tag">~/DCIM</span>, <span class="tag">~/Documents</span>.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">plugins need --with-bun</div>
+            <div class="desc">Plugin management and <span class="tag">bunx</span> commands require Bun. Re-run bootstrap with <span class="tag">--with-bun</span> to install the Termux-compatible <span class="tag">bun-termux</span> build.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">troubleshooting</div>
+      <h2 class="section-heading animate-in">common issues</h2>
+      <div class="list">
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">"can not execute: required file not found"</div>
+            <div class="desc">You're trying to run the raw OpenCode binary directly. Use the <span class="tag">opencode</span> launcher instead — it routes through the glibc loader.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">opencode starts but hangs on network</div>
+            <div class="desc">Missing glibc DNS config. Run: <span class="tag">echo 'hosts: files dns' &gt; $PREFIX/glibc/etc/nsswitch.conf</span></div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">"GLIBC_2.XX not found"</div>
+            <div class="desc">Your glibc version is too old. Run <span class="tag">pkg update && pkg install glibc</span> to get the latest.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">Install from Play Store doesn't work</div>
+            <div class="desc">Uninstall Play Store Termux and install from <strong>F-Droid</strong>. The Play Store version is abandoned (stuck on Android 7 API).</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">Binary download fails</div>
+            <div class="desc">GitHub rate limiting may block downloads. Try again later or download manually and place at <span class="tag">~/.local/share/opencode-termux/bin/opencode</span>.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">opencode-tmux fails with "command not found"</div>
+            <div class="desc">Run <span class="tag">pkg install tmux termux-api</span>. The bootstrap installs these, but they may need manual setup if skipped.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">Web UI not loading in browser</div>
+            <div class="desc">Ensure you're accessing <span class="tag">http://127.0.0.1:3000</span> (not localhost). If using a remote browser, the web server binds to 127.0.0.1 by default for security.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">opencode update; won't run after update</div>
+            <div class="desc">You ran <span class="tag">opencode update</span>, which replaced the wrapper with a raw binary. Re-run bootstrap: <span class="tag">bash bootstrap.sh --skip-deps --skip-workspace</span></div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">Bun install fails or bunx not found</div>
+            <div class="desc">Bun on Termux needs the <span class="tag">bun-termux</span> shim. The bootstrap installs it with <span class="tag">--with-bun</span>. If it fails, try manually: <span class="tag">curl -fsSL https://raw.githubusercontent.com/Happ1ness-dev/bun-termux/main/helper_scripts/bun-termux-manager | bash -s install</span></div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">Notification not showing</div>
+            <div class="desc">Ensure <span class="tag">termux-api</span> is installed: <span class="tag">pkg install termux-api</span>. Notifications require the Termux:API app from F-Droid as well.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">background</div>
+      <h2 class="section-heading animate-in">why this is needed</h2>
+      <p class="section-sub animate-in">OpenCode's Linux ARM64 binary has two fundamental incompatibilities with Android/Termux:</p>
+      <div class="list">
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">glibc vs Bionic libc</div>
+            <div class="desc">OpenCode links against glibc. Android uses Bionic libc. The dynamic linker paths don't exist on Android.</div>
+          </div>
+        </div>
+        <div class="list-item animate-in">
+          <div class="dot"></div>
+          <div class="content">
+            <div class="label">non-PIE executable</div>
+            <div class="desc">OpenCode's binary is not compiled as position-independent (no <span class="tag">-fPIE</span>). Android 5.0+ blocks non-PIE executables at the kernel level. Running through glibc's loader avoids this check.</div>
+          </div>
+        </div>
+      </div>
+      <p class="section-sub animate-in" style="margin-top: 1rem;">These are <strong>not bugs in OpenCode</strong> — they're just consequences of shipping a Linux binary for a platform it wasn't built for. The glibc layer bridges the gap cleanly.</p>
+      <p class="section-sub animate-in">For a truly native solution, <a href="https://github.com/guysoft/opencode-termux">guysoft/opencode-termux</a> cross-compiles OpenCode (including Bun and WebKit) for Android. It's the most native approach but requires prebuilt binaries from a third party.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>opencode setup guide</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
