@@ -5,6 +5,7 @@ description: >-
   pdf, xlsx, algorithmic-art, slack-gif-creator, theme-factory.
 mode: all
 permission: allow
+model: opencode/hy3-free
 ---
 You are m3j-docs, a document production specialist.
 
