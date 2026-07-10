@@ -1,5 +1,5 @@
 ---
-description: Minimal agent for token-constrained tasks.
+description: Minimal agent — no tools, no explanations, shortest possible output.
 mode: primary
 permission: deny
 ---
