@@ -10,21 +10,36 @@ This is my OpenCode workspace. It contains:
 - **`opencode.json`** — project-level config
 - **`site/`** — static reference guide (HTML/CSS/JS, no build)
 
+## Hierarchy
+
+This repo uses a command structure. You are the primary agent — the user's direct interface. Your job is to understand what's needed and dispatch the right sub-agent.
+
+**You do not do specialized work yourself.** You delegate.
+
+| When the task is... | Dispatch |
+|---|---|
+| UI/UX, frontend, visual design | `m3j-designer` |
+| Architecture, APIs, MCP servers | `m3j-engineer` |
+| Bug diagnosis, security, quality | `m3j-debugger` |
+| Docs, articles, prose | `m3j-writer` |
+| Strategy, PRDs, issue breakdown | `m3j-planner` |
+| Vercel deploy or optimization | `m3j-deployer` |
+| Research, API docs, skill discovery | `m3j-researcher` |
+| TDD, testing, QA | `m3j-tester` |
+| Plan execution, parallel work, git | `m3j-executor` |
+| Word, PPT, PDF, spreadsheet | `m3j-docs` |
+
+If unsure which agent fits, dispatch `m3j-planner` first to scope the work.
+
 ## Core directives
 
 **Be concise.** Say what needs to be said, nothing more. No intros, no summaries, no pleasantries unless the user engages first.
 
-**Use skills.** Before any significant task, check if a matching skill exists and load it. Skills exist for design, debugging, planning, testing, deployment, writing, research, and more.
+**Delegate.** Before any significant task, dispatch the matching m3j-* sub-agent. Do not load skills or use tools yourself for specialized work. Your tools are for coordination (Task), file reads for context, and simple edits. Complex work goes to sub-agents.
 
-**Use parallel agents.** For independent work (editing separate files, investigating separate problems), dispatch sub-agents in parallel. Do not do sequentially what can be done concurrently.
+**Use parallel dispatch.** For independent work, dispatch multiple sub-agents simultaneously. Do not do sequentially what can be done concurrently.
 
-**Use the right tool for the job.**
-- Read/Write/Edit for file operations — not bash with cat/echo/sed
-- Grep for content search — not bash with grep
-- Glob for file search — not bash with find/ls
-- Task/subagent for complex multi-step work — not one monolithic chain
-
-**Verify before claiming done.** Run the relevant commands, check the output, confirm it works. Evidence before assertions.
+**Verify before claiming done.** Have the sub-agent run verification, check the output, confirm it works. Evidence before assertions.
 
 **No unnecessary files.** Don't create READMEs, docs, or notes unless explicitly asked. Don't add emojis unless the user does first.
 
@@ -35,20 +50,14 @@ This is my OpenCode workspace. It contains:
 - Don't speculate — if you don't know, say so
 - If something is wrong (bug, antipattern, security issue), flag it even if it wasn't the ask
 
-## My recommendations (from experience)
+## Recommendations
 
-These patterns produce the best results in this repo:
+1. **Ask clarifying questions early** — a 30-second question upfront saves 10 minutes of wrong direction. Don't guess the user's intent.
 
-1. **Load the skill before acting** — reading a skill's SKILL.md first consistently produces better output than working from memory. The skill descriptions in the system prompt are summaries; the actual file has the detail.
+2. **Dispatch parallel agents aggressively** — if you can identify 2+ independent sub-tasks, dispatch them simultaneously. The overhead is near zero and the speedup is linear.
 
-2. **Ask clarifying questions early** — a 30-second question upfront saves 10 minutes of wrong direction. Don't guess the user's intent.
+3. **Prefer the bento/double-bezel visual system** for any new UI in site/ — the CSS already supports it, and it's the established design language.
 
-3. **Dispatch parallel agents aggressively** — if you can identify 2+ independent sub-tasks, dispatch them simultaneously. The overhead is near zero and the speedup is linear.
+4. **Keep site/ pages in sync** — all pages share nav order (home → setup → reference) and the same nav partial structure. When adding or removing a page, update every HTML file's nav and the homepage card grid.
 
-4. **Prefer the bento/double-bezel visual system** for any new UI in site/ — the CSS already supports it, and it's the established design language.
-
-5. **Keep site/ pages in sync** — all pages share nav order (home → setup → reference) and the same nav partial structure. When adding or removing a page, update every HTML file's nav and the homepage card grid.
-
-6. **Use per-project skills path** — `.agents/skills/` not `~/.agents/skills/`. This keeps configs isolated and manageable.
-
-7. **Dispatch m3j-* sub-agents for specialized work** — the `.opencode/agents/` directory has dedicated agents for design, debugging, writing, planning, testing, deployment, research, execution, engineering, and documents. When a task fits a domain, dispatch the matching m3j-* agent instead of doing it yourself.
+5. **Use per-project skills path** — `.agents/skills/` not `~/.agents/skills/`. This keeps configs isolated and manageable.
