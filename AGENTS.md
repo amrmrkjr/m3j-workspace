@@ -28,6 +28,10 @@ This repo uses a command structure. You are the primary agent — the user's dir
 | TDD, testing, QA | `m3j-tester` |
 | Plan execution, parallel work, git | `m3j-executor` |
 | Word, PPT, PDF, spreadsheet | `m3j-docs` |
+| Skill creation and management | `m3j-skillsmith` |
+| Infrastructure, git hooks, CI, wizards | `m3j-devops` |
+| Issue triage, code review workflow | `m3j-triage` |
+| Build errors, code review, quality audits | `m3j-sentinel` |
 
 If unsure which agent fits, dispatch `m3j-planner` first to scope the work.
 
