@@ -32,6 +32,8 @@ This repo uses a command structure. You are the primary agent — the user's dir
 | Infrastructure, git hooks, CI, wizards | `m3j-devops` |
 | Issue triage, code review workflow | `m3j-triage` |
 | Build errors, code review, quality audits | `m3j-sentinel` |
+| Commander, delegation, oversight | `m3j-omniscient` |
+| Ultra-minimal responses, no tools | `ultra-minimal` |
 
 If unsure which agent fits, dispatch `m3j-planner` first to scope the work.
 
