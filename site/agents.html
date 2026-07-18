@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>agents — opencode setup</title>
+  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <script>
+    if (localStorage.getItem("theme") === "light")
+      document.documentElement.setAttribute("data-theme", "light");
+  </script>
+</head>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo"><span>opencode</span> setup</a>
+      <div class="nav-links">
+        <a href="/">home</a>
+        <a href="setup.html">setup</a>
+        <a href="termux.html">termux</a>
+        <a href="reference.html">reference</a>
+        <a href="agents.html" class="active">agents</a>
+        <button id="theme-toggle" aria-label="toggle theme">☾</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <main>
+    <section class="hero">
+      <span class="eyebrow animate-in">roster</span>
+      <h1 class="animate-in"><span class="gradient">agent fleet</span><br>dispatch hierarchy</h1>
+      <p class="animate-in">A commander agent delegates specialized work to sub-agents. Each sub-agent has a distinct model, role, and dispatch trigger. This page catalogs every agent in the fleet.</p>
+    </section>
+
+    <hr class="accent-divider animate-in">
+
+    <section>
+      <div class="section-title animate-in">workflow</div>
+      <h2 class="section-heading animate-in">how dispatching works</h2>
+      <p class="section-sub animate-in">The primary agent (you are talking to it) inspects every request and routes it to the best specialist. Independent tasks go in parallel. Complex jobs go to <span class="tag">m3j-planner</span> first for scoping, then to <span class="tag">m3j-executor</span> for execution. When in doubt, <span class="tag">m3j-omniscient</span> decides.</p>
+    </section>
+
+    <section>
+      <div class="section-title animate-in">roster</div>
+      <div class="bento">
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">◆</span>
+            <h3>m3j-omniscient</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Commander</p>
+            <p>Delegates all work. The final decision-maker when routing is unclear.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">✦</span>
+            <h3>m3j-designer</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">UI/UX, Frontend, Visual Design</p>
+            <p>Ship interfaces that do not look templated. Handles bento grids, typography, design systems, and anti-slop frontend.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⚙</span>
+            <h3>m3j-engineer</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Architecture, APIs, MCP Servers</p>
+            <p>Designs deep modules, builds MCP servers, shapes API boundaries, and hardens service architecture.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⊘</span>
+            <h3>m3j-debugger</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Bug Diagnosis, Security, Quality</p>
+            <p>Diagnosis loop for hard bugs, performance regressions, and security reviews. Runs systematic debugging.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">✎</span>
+            <h3>m3j-writer</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Docs, Articles, Prose</p>
+            <p>Co-authors documentation, shapes raw material into articles, and polishes prose.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">◈</span>
+            <h3>m3j-planner</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Strategy, PRDs, Issue Breakdown</p>
+            <p>Scopes ambiguous requests, produces PRDs, grills designs, and breaks work into tracer-bullet issues.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">nemotron-3-ultra-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⇧</span>
+            <h3>m3j-deployer</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Vercel Deploy, Optimization</p>
+            <p>Deploys apps to Vercel, optimizes for cost and performance, manages preview deployments.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">◉</span>
+            <h3>m3j-researcher</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Investigation, API Docs, Skill Discovery</p>
+            <p>Investigates questions against primary sources and captures findings as Markdown files.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">mimo-v2.5-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">☑</span>
+            <h3>m3j-tester</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">TDD, Testing, QA</p>
+            <p>Red-green-refactor, integration tests, and QA sessions. Writes test before implementation.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">north-mini-code-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⏵</span>
+            <h3>m3j-executor</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Plan Execution, Parallel Dispatch, Git</p>
+            <p>Executes implementation plans with parallel sub-agents and manages git workflow.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">📄</span>
+            <h3>m3j-docs</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Word, PPT, PDF, Spreadsheets</p>
+            <p>Creates and manipulates .docx, .pptx, .xlsx, and PDF files with professional formatting.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">hy3-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">🔧</span>
+            <h3>m3j-skillsmith</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Skill Creation and Management</p>
+            <p>Author, edit, optimize, and test skills. Measures trigger accuracy and performance.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⎈</span>
+            <h3>m3j-devops</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Infrastructure, Git Hooks, CI, Wizards</p>
+            <p>Sets up pre-commit hooks, CI pipelines, git guardrails, and interactive bash wizards.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">◇</span>
+            <h3>m3j-triage</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Issue Triage, Code Review Workflow</p>
+            <p>Runs issues through a state machine: categories, verifies, grills, and writes agent-ready briefs.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">nemotron-3-ultra-free</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⚠</span>
+            <h3>m3j-sentinel</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Build Errors, Code Review, Quality Audits</p>
+            <p>Catches build failures, reviews code against standards, and runs quality audits.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+          </div>
+        </div>
+
+        <div class="card-shell animate-in">
+          <div class="card-core">
+            <span class="icon">⊟</span>
+            <h3>ultra-minimal</h3>
+            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Shortest Possible Responses</p>
+            <p>Answers with zero fluff. One word, one line, no tools, no explanation.</p>
+            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>opencode setup guide</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
