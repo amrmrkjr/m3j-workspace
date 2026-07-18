@@ -1,0 +1,21 @@
+name: validate
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check agent files
+        run: |
+          for f in .opencode/agents/*.md; do
+            [ -f "$f" ] && echo "✅ $f" || echo "❌ $f"
+          done
+      - name: Check site files
+        run: |
+          for f in site/*.html; do
+            [ -f "$f" ] && echo "✅ $f" || echo "❌ $f"
+          done
+      - name: Check config exists
+        run: |
+          [ -f opencode.json ] && echo "✅ opencode.json" || echo "❌ opencode.json"
+          [ -f AGENTS.md ] && echo "✅ AGENTS.md" || echo "❌ AGENTS.md"
