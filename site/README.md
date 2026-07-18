@@ -1,6 +1,6 @@
 # opencode setup
 
-A lean reference guide for running OpenCode — configuration tuning, database maintenance, and agent/skills management. Built from real sessions, not theory.
+A lean reference guide for running OpenCode — configuration tuning, database maintenance, agent/skills management, and Android setup. Built from real sessions, not theory.
 
 ## Quick start
 
@@ -14,21 +14,11 @@ open site/index.html
 
 | Page | What it covers |
 |---|---|
+| **Home** | Landing page with bento nav grid, theme toggle, scroll reveal |
 | **Setup** | SQLite vacuum + WAL checkpointing, config compaction, per-project agents/skills isolation |
 | **Reference** | Annotated global config with explanations, all key file paths, `.gitignore` patterns for OpenCode artifacts |
-
-## Why this exists
-
-OpenCode's defaults are generous — global skills, verbose tool output, full LSP, unchecked DB growth. The SQLite db can bloat past 100MB after a few weeks.
-
-This guide documents the knobs worth turning.
-
-## Key optimizations
-
-- **Vacuum the DB** — `sqlite3 ~/.local/share/opencode/opencode.db "VACUUM;"` reclaims space from deleted session data
-- **Disable LSP + formatter** — trims unnecessary processing if you don't use them
-- **Per-project skills** — move from `~/.agents/skills/` to `.agents/skills/` and reference via `opencode.json`
-- **Budget model** — set `model.small` for cheap mechanical tasks instead of defaulting to Sonnet
+| **Termux** | OpenCode on Android via Termux — native install, no root |
+| **Agents** | Full agent fleet roster with dispatch hierarchy, model assignments, and workflow explanation |
 
 ## Structure
 
@@ -37,6 +27,8 @@ site/
 ├── index.html       # homepage with bento grid
 ├── setup.html       # optimization recipes
 ├── reference.html   # annotated config + paths
+├── termux.html      # Android / Termux guide
+├── agents.html      # agent fleet showcase
 ├── style.css        # Ethereal Glass theme
 └── script.js        # theme toggle, scroll reveal
 ```
