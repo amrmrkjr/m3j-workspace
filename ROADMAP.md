@@ -1,4 +1,4 @@
-# ROADMAP: opencode_setup — Titus port + dogfood
+# ROADMAP: m3j-workspace — workflow + dogfood
 
 Real milestones in priority order. No dates — status only. Each milestone is one reviewable phase (per the workflow: one PR per phase).
 

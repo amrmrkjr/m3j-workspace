@@ -1,5 +1,4 @@
 # Project-local RTK filters — commit this file with your repo.
-# Adapted from ChrisTitusTech/titus-ai (.rtk/filters.toml) for OpenCode usage.
 # Filters here override user-global and built-in filters.
 # Docs: https://github.com/rtk-ai/rtk#custom-filters
 schema_version = 1

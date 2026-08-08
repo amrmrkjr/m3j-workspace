@@ -1,11 +1,11 @@
 # AGENTS.md — instructions for AI agents in this repo
 
-This file governs how AI agents behave when working in the `opencode_setup` repo. Follow these directives strictly.
+This file governs how AI agents behave when working in the `m3j-workspace` repo. Follow these directives strictly.
 
 ## Repo identity
 
 This is my OpenCode workspace. It contains:
-- **`.agents/skills/`** — ~100 specialized skills (branding, frontend, docs, testing, etc.)
+- **`.agents/skills/`** — 81 active (+13 archived) specialized skills (branding, frontend, docs, testing, etc.)
 - **`.opencode/agents/`** — custom agent definitions
 - **`opencode.json`** — project-level config
 - **`site/`** — static reference guide (HTML/CSS/JS, no build)
@@ -33,7 +33,7 @@ This repo uses a command structure. You are the primary agent — the user's dir
 | Issue triage, code review workflow | `m3j-triage` |
 | Build errors, code review, quality audits | `m3j-sentinel` |
 | Commander, delegation, oversight | `m3j-omniscient` |
-| AI coding workflow end-to-end (Titus port) | `m3j-workflow` skill / `m3j-planner` |
+| AI coding workflow end-to-end | `m3j-workflow` skill / `m3j-planner` |
 | Ultra-minimal responses, no tools | `ultra-minimal` |
 
 If unsure which agent fits, dispatch `m3j-planner` first to scope the work.
