@@ -1,6 +1,6 @@
 # Dependency Review Action.
 #
-# This Action will scan the dependency manifest changes in a pull request,
+# This Action scans the dependency manifest changes in a pull request,
 # preventing a merge if the changes introduce vulnerable dependencies or
 # invalid licenses.
 #
@@ -16,7 +16,10 @@
 # Official template permissions: contents read (to check out and analyze),
 # pull-requests write (to post the dependency review on the PR).
 name: "Dependency Review"
-on: [pull_request]
+
+on:
+  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -31,11 +34,8 @@ jobs:
 
       - name: "Dependency Review"
         uses: actions/dependency-review-action@v4
-        with:
-          # No fail-on-severity: it would fail every PR while no root-level
-          # lockfile exists (the "diff" is empty and the dependency graph is
-          # unpopulated at the root). Uncomment once lockfiles land:
-          # fail-on-severity: high
-          #
-          # Deny-license policy (optional, once lockfiles exist):
-          # deny-licenses: GPL-1.0-or-later, LGPL-2.0-or-later
+        # NOTE: no `with:` options — the dependency diff is empty while no
+        # root-level lockfile exists, so fail-on-severity / deny-licenses
+        # would be unreachable. Add them once lockfiles land:
+        #   fail-on-severity: high
+        #   deny-licenses: GPL-1.0-or-later, LGPL-2.0-or-later
