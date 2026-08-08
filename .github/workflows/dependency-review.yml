@@ -39,12 +39,9 @@ jobs:
       - name: "Dependency Review"
         if: steps.manifests.outputs.manifest == 'true'
         uses: actions/dependency-review-action@v4
-        with:
-          # No fail-on-severity: the dependency diff is empty while no root
-          # lockfile exists and the GitHub dependency graph for this repo is
-          # unpopulated — the action would error on every PR. Uncomment once
-          # root lockfiles land:
-          # fail-on-severity: high
-          #
-          # Deny-license policy (optional, once lockfiles exist):
-          # deny-licenses: GPL-1.0-or-later, LGPL-2.0-or-later
+        # No `with:` options: the dependency diff is empty while no root
+        # lockfile exists and the GitHub dependency graph for this repo is
+        # unpopulated — the action would error on every PR. Uncomment once
+        # root lockfiles land:
+        #   fail-on-severity: high
+        #   deny-licenses: GPL-1.0-or-later, LGPL-2.0-or-later
