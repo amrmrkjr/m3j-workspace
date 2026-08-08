@@ -12,15 +12,15 @@ A single command-driven workspace for running OpenCode on free-tier models, with
 1. Any task maps to an agent via the AGENTS.md dispatch table — no task is done inline for specialized work.
 2. The m3j workflow (docs/WORKFLOW.md) is the development process: SPEC → ROADMAP → TASKS → one phase per session → gates → one small PR.
 3. Skills live per-project in `.agents/skills/` — never `~/.agents/skills/` — and are indexed in docs/SKILLS.md.
-4. The static site (7 HTML pages, shared nav) documents setup, termux, reference material, the agent roster, the workflow, and the trading hub.
+4. The static site (5 HTML pages, shared nav) documents setup, the config/paths reference, the agent roster, and the workflow. Pages for out-of-scope separate projects are not part of this repo.
 5. CI and the local `scripts/validate.sh` gate file presence and nav sync; they stay code-only (no builds, no tests).
 
 ## Architecture & Components
-- **opencode.json** — model `opencode/big-pickle`; plan/compact split `nemotron-3-ultra-free` / `deepseek-v4-flash-free`; skills path `.agents/skills`; instructions AGENTS.md.
+- **opencode.json** — model `opencode/deepseek-v4-flash-free`; plan/compact agents `opencode/deepseek-v4-flash-free`; skills path `.agents/skills`; instructions AGENTS.md.
 - **.opencode/agents/** — 16 m3j-* specs + `ultra-minimal`. Each: frontmatter (description, model, mode, tools) + prompt body. Free-tier pinned.
 - **.opencode/commands/finish.md** — `/finish` 7-step quality gate → `m3j-sentinel`.
 - **.agents/skills/** — ~94 skills (81 active + 13 archived); the wiring to workflow steps is in docs/WORKFLOW.md.
-- **site/** — static HTML/CSS/JS reference, shared nav partial, bento/double-bezel design system, no build step.
+- **site/** — static HTML/CSS/JS reference, shared nav partial, "amber signal / carbon" design system, no build step.
 - **.github/workflows/validate.yml + scripts/validate.sh** — file-presence CI + local mirror.
 - **.rtk/filters.toml** — RTK output prettifying for noisy commands.
 

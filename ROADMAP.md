@@ -7,7 +7,7 @@ Real milestones in priority order. No dates — status only. Each milestone is o
 - [x] `m3j-workflow` skill ported into `.agents/skills/m3j-workflow/` (SKILL.md + templates/SPEC.md, ROADMAP.md, TASKS.md)
 - [x] Agent fleet: 16 `m3j-*` + `ultra-minimal` under `.opencode/agents/`
 - [x] `/finish` 7-step quality gate command at `.opencode/commands/finish.md`
-- [x] Static site: 7 pages with shared nav (home → setup → termux → reference → agents → workflow → trading)
+- [x] Static site: 5 pages with shared nav (home → setup → reference → agents → workflow)
 - [x] CI (`.github/workflows/validate.yml`) + dependabot; repo layout mirrored (docs/, .rtk/, scripts/, PR template)
 - [x] Workflow docs (`docs/OPENCODE_LAYOUT.md`, `docs/SKILLS.md`, `docs/WORKFLOW.md`) + root `SPEC.md` / `ROADMAP.md` / `TASKS.md`
 **Exit Criteria:**

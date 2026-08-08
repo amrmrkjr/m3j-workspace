@@ -3,158 +3,303 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>reference — opencode setup</title>
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css" rel="stylesheet">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="m3j-workspace reference — annotated opencode.json, global config diff, every path, the real .gitignore, repo map.">
+  <title>m3j-workspace · reference</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' fill='%230d0f11'/%3E%3Cpath d='M30 34 L66 48 L30 62 Z' fill='%23e5a93c'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
   <script>
-    if (localStorage.getItem("theme") === "light")
-      document.documentElement.setAttribute("data-theme", "light");
+    /* pre-hydrate theme — keeps state dark in default */
+    (function () {
+      try {
+        if (localStorage.getItem("theme") === "light")
+          document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    })();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">skip to content</a>
+
   <nav>
     <div class="nav-inner">
-      <a href="/" class="logo"><span>opencode</span> setup</a>
+      <a class="brand" href="./" aria-label="m3j-workspace — home">
+        m3j<span class="brand-caret">▸</span>workspace
+      </a>
       <div class="nav-links">
-        <a href="/">home</a>
+        <a href="./">home</a>
         <a href="setup.html">setup</a>
-        <a href="termux.html">termux</a>
-        <a href="reference.html" class="active">reference</a>
+        <a class="active" href="reference.html">reference</a>
         <a href="agents.html">agents</a>
         <a href="workflow.html">workflow</a>
-        <a href="trading.html">trading</a>
-        <button id="theme-toggle" aria-label="toggle theme">☾</button>
       </div>
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              aria-label="Toggle color theme" aria-pressed="false">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <path d="M20.1 14.3A8.3 8.3 0 0 1 9.7 3.9a8.3 8.3 0 1 0 10.4 10.4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </nav>
 
-  <main>
-    <div class="page-header animate-in">
-      <h1>reference</h1>
-      <p>Annotated config files and key paths.</p>
-    </div>
-
-    <hr class="accent-divider animate-in">
+  <main class="page" id="main">
+    <header class="page-head">
+      <p class="kicker reveal">reference</p>
+      <h1 class="reveal" style="--d:60ms">config, paths,<br><span class="hl">the actual file system</span></h1>
+      <p class="lede reveal" style="--d:120ms">
+        The real contents of the repo's config and ignore files, the paths agents should know, and the
+        map that keeps CI, scripts and the site in sync. No invented keys — everything below was read
+        from disk.
+      </p>
+    </header>
 
     <section>
-      <div class="section-title animate-in">config</div>
-      <h2 class="section-heading animate-in">global config</h2>
-      <p class="section-sub animate-in"><span class="tag">~/.config/opencode/opencode.jsonc</span></p>
-      <pre class="animate-in">{
-  // Compaction — trim session context automatically
+      <div class="section-head reveal">
+        <span class="idx">01</span>
+        <h2>project config — opencode.json</h2>
+      </div>
+      <p class="section-sub reveal">
+        Lives at the repo root and is the single source of truth for model, skills, instructions and
+        compaction. Annotated as-is:
+      </p>
+      <div class="term reveal">
+        <div class="term-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="term-file">opencode.json</span>
+        </div>
+        <pre class="term-pre">{
+  <span class="dim">// schema is the contract for the parser</span>
+  "$schema": "https://opencode.ai/config.json",
+
+  <span class="dim">// default model — every m3j-* agent pins its own</span>
+  "model": "opencode/deepseek-v4-flash-free",
+
+  <span class="dim">// skills resolve from the project, never ~/.agents/</span>
+  "skills": { "paths": [".agents/skills"] },
+
+  <span class="dim">// injected into every session</span>
+  "instructions": ["AGENTS.md"],
+
+  <span class="dim">// sub-hierarchy agents stay free-tier</span>
+  "agent": {
+    "plan":       { "model": "opencode/deepseek-v4-flash-free" },
+    "compaction": { "model": "opencode/deepseek-v4-flash-free" }
+  },
+
+  <span class="dim">// token economy: compact before you run out</span>
   "compaction": {
-    "enabled": true,
-    "max_context_tokens": 8000,
-    "strategy": "balanced"
-  },
-
-  // Tool output — avoid noise in prompts
-  "tool_output": {
-    "max_length": 500,
-    "truncation": "head"
-  },
-
-  // Permission — accept all non-destructive operations
-  "permission": "allow",
-
-  // Small model for cheap mechanical tasks
-  "small_model": "claude-haiku-3-5-20241022",
-
-  // Disable unused features
-  "lsp": false,
-  "formatter": false,
-
-  // Project references for context
-  "references": {
-    "site": {
-      "name": "site",
-      "path": "./site"
-    }
+    "auto": true,
+    "prune": false,      <span class="dim">// keep run history in this project</span>
+    "reserved": 10000,   <span class="dim">// tokens held for the current exchange</span>
+    "tail_turns": 2      <span class="dim">// most recent turns survive compaction</span>
   }
 }</pre>
+      </div>
     </section>
 
     <section>
-      <div class="section-title animate-in">paths</div>
-      <h2 class="section-heading animate-in">key locations</h2>
-      <div class="list">
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">database</div>
-            <div class="desc"><span class="tag">~/.local/share/opencode/opencode.db</span></div>
-          </div>
+      <div class="section-head reveal">
+        <span class="idx">02</span>
+        <h2>global config — the jsonc diff</h2>
+      </div>
+      <p class="section-sub reveal">
+        Machine-level state lives in <span class="chip">~/.config/opencode/opencode.jsonc</span> and
+        applies to every project. The differences from the project file are the point:
+      </p>
+      <div class="rowlist reveal">
+        <div class="row">
+          <span class="k">autoupdate</span>
+          <span class="v"><span class="chip">notify</span> — never auto-download on this machine</span>
         </div>
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">global config</div>
-            <div class="desc"><span class="tag">~/.config/opencode/opencode.jsonc</span></div>
-          </div>
+        <div class="row">
+          <span class="k">default_agent</span>
+          <span class="v"><span class="chip">m3j-omniscient</span> — every session starts with the commander</span>
         </div>
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">project config</div>
-            <div class="desc"><span class="tag">./opencode.json</span></div>
-          </div>
+        <div class="row">
+          <span class="k">snapshot</span>
+          <span class="v"><span class="chip">true</span> — performance tuning for a low-RAM machine</span>
         </div>
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">global agents</div>
-            <div class="desc"><span class="tag">~/.config/opencode/agents/</span></div>
-          </div>
+        <div class="row">
+          <span class="k">compaction (global)</span>
+          <span class="v"><span class="chip">prune: true</span> · <span class="chip">reserved: 2000</span> ·
+            <span class="chip">tail_turns: 1</span> · <span class="chip">preserve_recent_tokens: 4000</span></span>
         </div>
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">project agents</div>
-            <div class="desc"><span class="tag">./.opencode/agents/</span></div>
-          </div>
+        <div class="row">
+          <span class="k">tool_output</span>
+          <span class="v"><span class="chip">max_lines: 500</span> · <span class="chip">max_bytes: 20000</span> —
+            truncate wall-of-text tool dumps before they enter context</span>
         </div>
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">skills</div>
-            <div class="desc"><span class="tag">./.agents/skills/</span></div>
-          </div>
+        <div class="row">
+          <span class="k">permission</span>
+          <span class="v"><span class="chip">allow</span> — non-destructive tooling is assumed safe</span>
         </div>
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">session data</div>
-            <div class="desc"><span class="tag">~/.local/share/opencode/</span></div>
-          </div>
+        <div class="row">
+          <span class="k">command</span>
+          <span class="v"><span class="chip">preview</span> (serve site via python3 http.server) ·
+            <span class="chip">status</span> (git status summary)</span>
+        </div>
+        <div class="row">
+          <span class="k">mcp</span>
+          <span class="v">context7, gh_grep, github, sentry, playwright — registered but all
+            <span class="chip">enabled: false</span>; remote ones can flip on per project</span>
+        </div>
+        <div class="row">
+          <span class="k">references</span>
+          <span class="v"><span class="chip">site</span> — the site folder exposed as agent context</span>
         </div>
       </div>
     </section>
 
     <section>
-      <div class="section-title animate-in">git</div>
-      <h2 class="section-heading animate-in">.gitignore</h2>
-      <p class="section-sub animate-in">Keep runtime artifacts out of version control.</p>
-      <pre class="animate-in"># OpenCode
-opencode.db
-opencode.db-wal
-opencode.db-shm
+      <div class="section-head reveal">
+        <span class="idx">03</span>
+        <h2>key locations</h2>
+      </div>
+      <div class="rowlist reveal">
+        <div class="row">
+          <span class="k">project config</span>
+          <span class="v"><span class="chip accent">opencode.json</span> (repo root)</span>
+        </div>
+        <div class="row">
+          <span class="k">global config</span>
+          <span class="v"><span class="chip">~/.config/opencode/opencode.jsonc</span></span>
+        </div>
+        <div class="row">
+          <span class="k">session database</span>
+          <span class="v"><span class="chip">~/.local/share/opencode/opencode.db</span> + <span class="chip">-wal</span> / <span class="chip">-shm</span></span>
+        </div>
+        <div class="row">
+          <span class="k">global agents</span>
+          <span class="v"><span class="chip">~/.config/opencode/agents/</span></span>
+        </div>
+        <div class="row">
+          <span class="k">project agents</span>
+          <span class="v"><span class="chip">.opencode/agents/</span> — the 16-agent fleet</span>
+        </div>
+        <div class="row">
+          <span class="k">skills</span>
+          <span class="v"><span class="chip">.agents/skills/</span> (active) · <span class="chip">.agents/archive/skills/</span> (retired)</span>
+        </div>
+        <div class="row">
+          <span class="k">quality gate</span>
+          <span class="v"><span class="chip">.opencode/commands/finish.md</span> → dispatched to <span class="chip">m3j-sentinel</span></span>
+        </div>
+        <div class="row">
+          <span class="k">local checker</span>
+          <span class="v"><span class="chip">scripts/validate.sh</span> — mirrors CI, offline</span>
+        </div>
+      </div>
+    </section>
 
-# Session data
-.superpowers/
+    <section>
+      <div class="section-head reveal">
+        <span class="idx">04</span>
+        <h2>repo map</h2>
+      </div>
+      <div class="term reveal">
+        <div class="term-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="term-file">m3j-workspace/</span>
+        </div>
+        <pre class="term-pre">m3j-workspace/
+├── opencode.json                     <span class="dim"># project config (annotated above)</span>
+├── AGENTS.md                         <span class="dim"># primary-agent contract + dispatch table</span>
+├── README.md                         <span class="dim"># human overview</span>
+├── SPEC.md · ROADMAP.md · TASKS.md   <span class="dim"># workflow working files</span>
+├── scripts/
+│   └── validate.sh                   <span class="dim"># local CI mirror + nav-sync gate</span>
+├── docs/
+│   ├── OPENCODE_LAYOUT.md            <span class="dim"># agent-facing map of this repo</span>
+│   ├── SKILLS.md                     <span class="dim"># skills index, grouped</span>
+│   └── WORKFLOW.md                   <span class="dim"># 10-step pipeline doc</span>
+├── .agents/
+│   ├── skills/                       <span class="dim"># 81 active skill dirs (SKILL.md each)</span>
+│   └── archive/skills/               <span class="dim"># 13 retired, history kept</span>
+├── .opencode/
+│   ├── agents/                       <span class="dim"># 16 fleet definitions</span>
+│   ├── commands/finish.md            <span class="dim"># /finish — 7-step gate</span>
+│   └── package.json                  <span class="dim"># pins @opencode-ai/plugin</span>
+├── .github/workflows/validate.yml    <span class="dim"># CI: file presence only</span>
+├── .rtk/filters.toml                 <span class="dim"># command-output filters</span>
+└── site/                             <span class="dim"># this reference guide (5 pages, no build)</span></pre>
+      </div>
+      <div class="note reveal">
+        <span class="note-tag">layout</span>
+        <span><span class="chip">docs/OPENCODE_LAYOUT.md</span> is the canonical map agents read first —
+        update it whenever this tree changes.</span>
+      </div>
+    </section>
 
-# Node
+    <section>
+      <div class="section-head reveal">
+        <span class="idx">05</span>
+        <h2>.gitignore — as it actually reads</h2>
+      </div>
+      <p class="section-sub reveal">
+        Runtime artifacts stay out; the skill library stays in. The pattern is: ignore everything under
+        <span class="chip">.agents/</span>, then explicitly un-ignore the two tracked branches.
+      </p>
+      <div class="term reveal">
+        <div class="term-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="term-file">.gitignore</span>
+        </div>
+        <pre class="term-pre">.agents/*
+!.agents/skills/
+!.agents/skills/**
+!.agents/archive/
+!.agents/archive/**
+
+.playwright-mcp/
+site-screenshot.png
 node_modules/
+skills-lock.json
+.env
+.env.*</pre>
+      </div>
+      <div class="note reveal">
+        <span class="note-tag">git</span>
+        <span>Note what is <b>absent</b>: the opencode database never gets an ignore entry because it
+        never lives in the repo tree at all — it's user-state under <span class="chip">~/.local/share/</span>.</span>
+      </div>
+    </section>
 
-# OS
-.DS_Store
-Thumbs.db</pre>
+    <section>
+      <div class="section-head reveal">
+        <span class="idx">06</span>
+        <h2>conventions that hold it together</h2>
+      </div>
+      <div class="rowlist reveal">
+        <div class="row">
+          <span class="k">edit configs</span>
+          <span class="v">only through the <span class="chip">customize-opencode</span> skill</span>
+        </div>
+        <div class="row">
+          <span class="k">add a page</span>
+          <span class="v">update every site nav + the homepage grid — the nav-sync check fails otherwise</span>
+        </div>
+        <div class="row">
+          <span class="k">before merge</span>
+          <span class="v"><span class="chip">bash scripts/validate.sh</span> must pass; CI mirrors it code-free</span>
+        </div>
+        <div class="row">
+          <span class="k">design locale</span>
+          <span class="v">the site is "amber signal / carbon" — see <span class="chip">style.css</span> tokens at the top</span>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <p>opencode setup guide</p>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>m3j-workspace · reference guide</span>
+      <span class="footer-note">static · offline · free-tier pinned <span class="ac">▸</span></span>
+    </div>
   </footer>
 
   <script src="script.js"></script>

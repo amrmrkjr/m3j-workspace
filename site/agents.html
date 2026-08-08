@@ -3,221 +3,392 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>agents — opencode setup</title>
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css" rel="stylesheet">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="m3j-workspace agents — the 16-member dispatch fleet: hierarchy, lanes, model assignments, skill coverage.">
+  <title>m3j-workspace · agents</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' fill='%230d0f11'/%3E%3Cpath d='M30 34 L66 48 L30 62 Z' fill='%23e5a93c'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
   <script>
-    if (localStorage.getItem("theme") === "light")
-      document.documentElement.setAttribute("data-theme", "light");
+    /* pre-hydrate theme — keeps state dark in default */
+    (function () {
+      try {
+        if (localStorage.getItem("theme") === "light")
+          document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    })();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">skip to content</a>
+
   <nav>
     <div class="nav-inner">
-      <a href="/" class="logo"><span>opencode</span> setup</a>
+      <a class="brand" href="./" aria-label="m3j-workspace — home">
+        m3j<span class="brand-caret">▸</span>workspace
+      </a>
       <div class="nav-links">
-        <a href="/">home</a>
+        <a href="./">home</a>
         <a href="setup.html">setup</a>
-        <a href="termux.html">termux</a>
         <a href="reference.html">reference</a>
-        <a href="agents.html" class="active">agents</a>
+        <a class="active" href="agents.html">agents</a>
         <a href="workflow.html">workflow</a>
-        <a href="trading.html">trading</a>
-        <button id="theme-toggle" aria-label="toggle theme">☾</button>
       </div>
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              aria-label="Toggle color theme" aria-pressed="false">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <path d="M20.1 14.3A8.3 8.3 0 0 1 9.7 3.9a8.3 8.3 0 1 0 10.4 10.4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </nav>
 
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-
-  <main>
-    <section class="hero">
-      <span class="eyebrow animate-in">roster</span>
-      <h1 class="animate-in"><span class="gradient">agent fleet</span><br>dispatch hierarchy</h1>
-      <p class="animate-in">A commander agent delegates specialized work to sub-agents. Each sub-agent has a distinct model, role, and dispatch trigger. This page catalogs every agent in the fleet.</p>
-    </section>
-
-    <hr class="accent-divider animate-in">
-
-    <section>
-      <div class="section-title animate-in">workflow</div>
-      <h2 class="section-heading animate-in">how dispatching works</h2>
-      <p class="section-sub animate-in">The primary agent (you are talking to it) inspects every request and routes it to the best specialist. Independent tasks go in parallel. Complex jobs go to <span class="tag">m3j-planner</span> first for scoping, then to <span class="tag">m3j-executor</span> for execution. When in doubt, <span class="tag">m3j-omniscient</span> decides.</p>
-    </section>
+  <main class="page" id="main">
+    <header class="page-head">
+      <p class="kicker reveal">roster</p>
+      <h1 class="reveal" style="--d:60ms">sixteen agents,<br><span class="hl">one commander</span></h1>
+      <p class="lede reveal" style="--d:120ms">
+        The primary agent you talk to never does specialized work — it decides and delegates. Each
+        m3j-* specialist below carries its own pinned free-tier model, its own permission surface, and
+        the skills it knows how to load. This page is the printed dispatch table.
+      </p>
+    </header>
 
     <section>
-      <div class="section-title animate-in">roster</div>
-      <div class="bento">
+      <div class="section-head reveal">
+        <span class="idx">01</span>
+        <h2>dispatch table</h2>
+      </div>
+      <p class="section-sub reveal">
+        The contract lives in <span class="chip">AGENTS.md</span>. "When the task is X, dispatch Y" —
+        not open-ended request routing:
+      </p>
+      <div class="table-wrap reveal">
+        <table class="fleet">
+          <thead>
+            <tr>
+              <th>when the task is…</th>
+              <th>dispatch</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>UI/UX, frontend, visual design</td><td class="agent-cell">m3j-designer</td></tr>
+            <tr><td>Architecture, APIs, MCP servers</td><td class="agent-cell">m3j-engineer</td></tr>
+            <tr><td>Bug diagnosis, security, quality</td><td class="agent-cell">m3j-debugger</td></tr>
+            <tr><td>Docs, articles, prose</td><td class="agent-cell">m3j-writer</td></tr>
+            <tr><td>Strategy, PRDs, issue breakdown</td><td class="agent-cell">m3j-planner</td></tr>
+            <tr><td>Vercel deploy or optimization</td><td class="agent-cell">m3j-deployer</td></tr>
+            <tr><td>Research, API docs, skill discovery</td><td class="agent-cell">m3j-researcher</td></tr>
+            <tr><td>TDD, testing, QA</td><td class="agent-cell">m3j-tester</td></tr>
+            <tr><td>Plan execution, parallel work, git</td><td class="agent-cell">m3j-executor</td></tr>
+            <tr><td>Word, PPT, PDF, spreadsheets</td><td class="agent-cell">m3j-docs</td></tr>
+            <tr><td>Skill creation and management</td><td class="agent-cell">m3j-skillsmith</td></tr>
+            <tr><td>Infrastructure, git hooks, CI, wizards</td><td class="agent-cell">m3j-devops</td></tr>
+            <tr><td>Issue triage, code review workflow</td><td class="agent-cell">m3j-triage</td></tr>
+            <tr><td>Build errors, code review, quality audits</td><td class="agent-cell">m3j-sentinel</td></tr>
+            <tr><td>Commander, delegation, oversight</td><td class="agent-cell">m3j-omniscient</td></tr>
+            <tr><td>AI coding workflow end-to-end</td><td class="agent-cell">m3j-workflow skill / m3j-planner</td></tr>
+            <tr><td>Ultra-minimal responses, no tools</td><td class="agent-cell">ultra-minimal</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note reveal">
+        <span class="note-tag">rule</span>
+        <span>If unsure which agent fits, dispatch <b>m3j-planner</b> first to scope the work. When
+        specialists disagree, <b>m3j-omniscient</b> decides.</span>
+      </div>
+    </section>
 
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">◆</span>
-            <h3>m3j-omniscient</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Commander</p>
-            <p>Delegates all work. The final decision-maker when routing is unclear.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+    <section>
+      <div class="section-head reveal">
+        <span class="idx">02</span>
+        <h2>lane by lane</h2>
+      </div>
+      <p class="section-sub reveal">
+        Model tags are read from the agent definitions in <span class="chip">.opencode/agents/</span> —
+        models stay pinned. "Covers" lists the skills each agent dispatches internally.
+      </p>
+
+      <h3 class="reveal" style="font-size:1rem; margin-bottom:.6rem">
+        <span class="chip accent" style="margin-right:.5rem">command</span> the top of the chain
+      </h3>
+      <div class="agents-grid">
+        <div class="agent-card reveal">
+          <div class="agent-id">
+            <span class="agent-name">m3j-omniscient</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">commander · delegation · oversight</div>
+          <p class="agent-desc">Owns the mission and never does work directly. Final authority when
+            sub-agents disagree; routes every request to the right specialist.</p>
+        </div>
+      </div>
+
+      <h3 class="reveal" style="font-size:1rem; margin:2.5rem 0 1rem">
+        <span class="chip accent" style="margin-right:.5rem">craft</span>design, build, diagnosis, prose
+      </h3>
+      <div class="agents-grid">
+        <div class="agent-card reveal">
+          <div class="agent-id">
+            <span class="agent-name">m3j-designer</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">UI/UX · frontend · visual design</div>
+          <p class="agent-desc">Ships interfaces that do not look templated. Design systems, redesigns,
+            landers, brand and canvas direction.</p>
+          <div class="agent-covers">
+            <span class="chip">high-end-visual-design</span><span class="chip">design-taste-frontend</span>
+            <span class="chip">impeccable</span><span class="chip">shadcn</span><span class="chip">brandkit</span>
+            <span class="chip">canvas-design</span><span class="chip">gpt-taste</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">✦</span>
-            <h3>m3j-designer</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">UI/UX, Frontend, Visual Design</p>
-            <p>Ship interfaces that do not look templated. Handles bento grids, typography, design systems, and anti-slop frontend.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+        <div class="agent-card reveal" style="--d:60ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-engineer</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">architecture · APIs · MCP servers</div>
+          <p class="agent-desc">Deep modules, interface design, domain modeling, MCP server builds,
+            codebase deepening.</p>
+          <div class="agent-covers">
+            <span class="chip">codebase-design</span><span class="chip">design-an-interface</span>
+            <span class="chip">domain-modeling</span><span class="chip">mcp-builder</span>
+            <span class="chip">improve-codebase-architecture</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">⚙</span>
-            <h3>m3j-engineer</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Architecture, APIs, MCP Servers</p>
-            <p>Designs deep modules, builds MCP servers, shapes API boundaries, and hardens service architecture.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+        <div class="agent-card reveal" style="--d:120ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-debugger</span>
+            <span class="agent-model">laguna-s-2.1-free</span>
+          </div>
+          <div class="agent-role">bug diagnosis · security · quality</div>
+          <p class="agent-desc">Root-cause without guessing — evidence first. Performance regressions,
+            security review, troubleshooting loops.</p>
+          <div class="agent-covers">
+            <span class="chip">diagnosing-bugs</span><span class="chip">systematic-debugging</span>
+            <span class="chip">security-review</span><span class="chip">code-review</span>
+            <span class="chip">webapp-testing</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">⊘</span>
-            <h3>m3j-debugger</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Bug Diagnosis, Security, Quality</p>
-            <p>Diagnosis loop for hard bugs, performance regressions, and security reviews. Runs systematic debugging.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+        <div class="agent-card reveal" style="--d:180ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-writer</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">docs · articles · prose</div>
+          <p class="agent-desc">Precision communication — co-authored docs, articles shaped from raw
+            fragments, internal comms, guidelines compliance.</p>
+          <div class="agent-covers">
+            <span class="chip">doc-coauthoring</span><span class="chip">edit-article</span>
+            <span class="chip">writing-guidelines</span><span class="chip">internal-comms</span>
+            <span class="chip">writing-plans</span><span class="chip">teach</span>
           </div>
         </div>
+      </div>
 
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">✎</span>
-            <h3>m3j-writer</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Docs, Articles, Prose</p>
-            <p>Co-authors documentation, shapes raw material into articles, and polishes prose.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+      <h3 class="reveal" style="font-size:1rem; margin:2.5rem 0 1rem">
+        <span class="chip accent" style="margin-right:.5rem">decide</span>planning, research & review
+      </h3>
+      <div class="agents-grid">
+        <div class="agent-card reveal">
+          <div class="agent-id">
+            <span class="agent-name">m3j-planner</span>
+            <span class="agent-model">nemotron-3-ultra-free</span>
+          </div>
+          <div class="agent-role">strategy · PRDs · issue breakdown</div>
+          <p class="agent-desc">Turns fuzzy ideas into structured plans — PRDs, stress-tested designs,
+            vertical-slice issues.</p>
+          <div class="agent-covers">
+            <span class="chip">brainstorming</span><span class="chip">grilling</span>
+            <span class="chip">grill-me</span><span class="chip">loop-me</span><span class="chip">to-prd</span>
+            <span class="chip">to-issues</span><span class="chip">wayfinder</span><span class="chip">implement</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">◈</span>
-            <h3>m3j-planner</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Strategy, PRDs, Issue Breakdown</p>
-            <p>Scopes ambiguous requests, produces PRDs, grills designs, and breaks work into tracer-bullet issues.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">nemotron-3-ultra-free</span></p>
+        <div class="agent-card reveal" style="--d:60ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-researcher</span>
+            <span class="agent-model">longcat-2.0-free</span>
+          </div>
+          <div class="agent-role">investigation · API docs · skill discovery</div>
+          <p class="agent-desc">High-trust primary sources, findings captured as Markdown in the repo,
+            skill discovery, Claude API reference.</p>
+          <div class="agent-covers">
+            <span class="chip">research</span><span class="chip">find-skills</span>
+            <span class="chip">claude-api</span><span class="chip">obsidian-vault</span>
+            <span class="chip">teach</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">⇧</span>
-            <h3>m3j-deployer</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Vercel Deploy, Optimization</p>
-            <p>Deploys apps to Vercel, optimizes for cost and performance, manages preview deployments.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+        <div class="agent-card reveal" style="--d:120ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-triage</span>
+            <span class="agent-model">longcat-2.0-free</span>
+          </div>
+          <div class="agent-role">issue triage · code-review workflow</div>
+          <p class="agent-desc">Moves issues and PRs through the state machine — categorise, verify,
+            grill, then writer agent-ready briefs; vet reviews before they're accepted.</p>
+          <div class="agent-covers">
+            <span class="chip">triage</span><span class="chip">requesting-code-review</span>
+            <span class="chip">receiving-code-review</span><span class="chip">to-issues</span>
+            <span class="chip">request-refactor-plan</span>
           </div>
         </div>
+      </div>
 
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">◉</span>
-            <h3>m3j-researcher</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Investigation, API Docs, Skill Discovery</p>
-            <p>Investigates questions against primary sources and captures findings as Markdown files.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">mimo-v2.5-free</span></p>
+      <h3 class="reveal" style="font-size:1rem; margin:2.5rem 0 1rem">
+        <span class="chip accent" style="margin-right:.5rem">deliver</span>execution, release & tooling
+      </h3>
+      <div class="agents-grid">
+        <div class="agent-card reveal">
+          <div class="agent-id">
+            <span class="agent-name">m3j-tester</span>
+            <span class="agent-model">north-mini-code-free</span>
+          </div>
+          <div class="agent-role">TDD · testing · QA</div>
+          <p class="agent-desc">Red → green → refactor. Harness first, tests before implementation,
+            browser-level verification.</p>
+          <div class="agent-covers">
+            <span class="chip">test-driven-development</span><span class="chip">qa</span>
+            <span class="chip">webapp-testing</span><span class="chip">scaffold-exercises</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">☑</span>
-            <h3>m3j-tester</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">TDD, Testing, QA</p>
-            <p>Red-green-refactor, integration tests, and QA sessions. Writes test before implementation.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">north-mini-code-free</span></p>
+        <div class="agent-card reveal" style="--d:60ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-executor</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">plan execution · parallel dispatch · git</div>
+          <p class="agent-desc">Drives implementation plans to completion — one phase per session,
+            parallel sub-agents, worktrees, handoffs.</p>
+          <div class="agent-covers">
+            <span class="chip">executing-plans</span><span class="chip">subagent-driven-development</span>
+            <span class="chip">dispatching-parallel-agents</span><span class="chip">using-git-worktrees</span>
+            <span class="chip">handoff</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">⏵</span>
-            <h3>m3j-executor</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Plan Execution, Parallel Dispatch, Git</p>
-            <p>Executes implementation plans with parallel sub-agents and manages git workflow.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+        <div class="agent-card reveal" style="--d:120ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-deployer</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">Vercel deploy · optimization</div>
+          <p class="agent-desc">Deployments, preview URLs, cost and performance optimization,
+            environment configuration.</p>
+          <div class="agent-covers">
+            <span class="chip">deploy-to-vercel</span><span class="chip">vercel-cli-with-tokens</span>
+            <span class="chip">vercel-optimize</span><span class="chip">vercel-react-*</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">📄</span>
-            <h3>m3j-docs</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Word, PPT, PDF, Spreadsheets</p>
-            <p>Creates and manipulates .docx, .pptx, .xlsx, and PDF files with professional formatting.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">hy3-free</span></p>
+        <div class="agent-card reveal" style="--d:180ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-devops</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">infra · git hooks · CI · wizards</div>
+          <p class="agent-desc">Pre-commit hooks, git guardrails, pipeline setup, interactive bash
+            wizards, merge-conflict resolution.</p>
+          <div class="agent-covers">
+            <span class="chip">setup-pre-commit</span><span class="chip">git-guardrails-claude-code</span>
+            <span class="chip">wizard</span><span class="chip">resolving-merge-conflicts</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">🔧</span>
-            <h3>m3j-skillsmith</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Skill Creation and Management</p>
-            <p>Author, edit, optimize, and test skills. Measures trigger accuracy and performance.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+        <div class="agent-card reveal">
+          <div class="agent-id">
+            <span class="agent-name">m3j-docs</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">word · ppt · pdf · spreadsheets</div>
+          <p class="agent-desc">Professional document production — docx/pptx/pdf/xlsx with the right
+            skill loaded before any file work.</p>
+          <div class="agent-covers">
+            <span class="chip">docx</span><span class="chip">pptx</span><span class="chip">pdf</span>
+            <span class="chip">xlsx</span><span class="chip">algorithmic-art</span><span class="chip">theme-factory</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">⎈</span>
-            <h3>m3j-devops</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Infrastructure, Git Hooks, CI, Wizards</p>
-            <p>Sets up pre-commit hooks, CI pipelines, git guardrails, and interactive bash wizards.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
+        <div class="agent-card reveal" style="--d:60ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-skillsmith</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">skill creation · management</div>
+          <p class="agent-desc">Authors, edits and measures skills — trigger accuracy, evals, defined
+            workflows, predictable docs.</p>
+          <div class="agent-covers">
+            <span class="chip">skill-creator</span><span class="chip">writing-skills</span>
+            <span class="chip">writing-great-skills</span><span class="chip">customize-opencode</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">◇</span>
-            <h3>m3j-triage</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Issue Triage, Code Review Workflow</p>
-            <p>Runs issues through a state machine: categories, verifies, grills, and writes agent-ready briefs.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">nemotron-3-ultra-free</span></p>
+        <div class="agent-card reveal" style="--d:120ms">
+          <div class="agent-id">
+            <span class="agent-name">m3j-sentinel</span>
+            <span class="agent-model">laguna-s-2.1-free</span>
+          </div>
+          <div class="agent-role">build errors · code review · quality audits</div>
+          <p class="agent-desc">The quality sentinel — pre-merge review, <span class="chip">/finish</span>
+            gate operator, catches regressions before they land.</p>
+          <div class="agent-covers">
+            <span class="chip">code-review</span><span class="chip">web-quality-audit</span>
+            <span class="chip">security-review</span><span class="chip">finishing-a-development-branch</span>
+            <span class="chip">verification-before-completion</span>
           </div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">⚠</span>
-            <h3>m3j-sentinel</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Build Errors, Code Review, Quality Audits</p>
-            <p>Catches build failures, reviews code against standards, and runs quality audits.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">big-pickle</span></p>
+        <div class="agent-card reveal" style="--d:180ms">
+          <div class="agent-id">
+            <span class="agent-name">ultra-minimal</span>
+            <span class="agent-model">deepseek-v4-flash-free</span>
+          </div>
+          <div class="agent-role">shortest possible answers</div>
+          <p class="agent-desc">No tools, no explanations, no greetings — one word when one word is
+            enough. Cost-capped by design.</p>
+          <div class="agent-covers">
+            <span class="chip">deny tools</span><span class="chip">max concision</span>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">⊟</span>
-            <h3>ultra-minimal</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">Shortest Possible Responses</p>
-            <p>Answers with zero fluff. One word, one line, no tools, no explanation.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">deepseek-v4-flash-free</span></p>
-          </div>
+    <section>
+      <div class="section-head reveal">
+        <span class="idx">03</span>
+        <h2>dispatch rules</h2>
+      </div>
+      <div class="rowlist reveal">
+        <div class="row">
+          <span class="k">delegate</span>
+          <span class="v">the primary agent never loads skills or does specialized work — that is
+            coordination's job, tools stay with the fleet</span>
         </div>
-
+        <div class="row">
+          <span class="k">parallel</span>
+          <span class="v">independent tasks dispatch simultaneously — sequential only where sequential is
+            required</span>
+        </div>
+        <div class="row">
+          <span class="k">verify</span>
+          <span class="v">sub-agents run verification before claiming done; evidence precedes assertion</span>
+        </div>
+        <div class="row">
+          <span class="k">route</span>
+          <span class="v">unclear scope → m3j-planner first; disagreement → m3j-omniscient; workflow →
+            m3j-workflow skill</span>
+        </div>
+        <div class="row">
+          <span class="k">models</span>
+          <span class="v">all pinned free-tier — planning on nemotron, review on laguna/longcat, tests on
+            north-mini, execution on deepseek-flash. Don't override.</span>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>opencode setup guide</p>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>m3j-workspace · reference guide</span>
+      <span class="footer-note">static · offline · free-tier pinned <span class="ac">▸</span></span>
+    </div>
   </footer>
 
   <script src="script.js"></script>

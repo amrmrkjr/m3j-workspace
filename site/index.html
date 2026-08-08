@@ -3,130 +3,146 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>opencode setup</title>
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css" rel="stylesheet">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="m3j-workspace reference guide — OpenCode workspace, 81+13 skills, 16 agents, free-tier delivery pipeline.">
+  <title>m3j-workspace</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' fill='%230d0f11'/%3E%3Cpath d='M30 34 L66 48 L30 62 Z' fill='%23e5a93c'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
   <script>
-    if (localStorage.getItem("theme") === "light")
-      document.documentElement.setAttribute("data-theme", "light");
+    /* pre-paint theme — keeps first paint dark in default */
+    (function () {
+      try {
+        if (localStorage.getItem("theme") === "light")
+          document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    })();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">skip to content</a>
+
   <nav>
     <div class="nav-inner">
-      <a href="/" class="logo"><span>opencode</span> setup</a>
+      <a class="brand" href="./" aria-label="m3j-workspace — home">
+        m3j<span class="brand-caret">▸</span>workspace
+      </a>
       <div class="nav-links">
-        <a href="/" class="active">home</a>
+        <a class="active" href="./">home</a>
         <a href="setup.html">setup</a>
-        <a href="termux.html">termux</a>
         <a href="reference.html">reference</a>
         <a href="agents.html">agents</a>
         <a href="workflow.html">workflow</a>
-        <a href="trading.html">trading</a>
-        <button id="theme-toggle" aria-label="toggle theme">☾</button>
       </div>
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              aria-label="Toggle color theme" aria-pressed="false">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <path d="M20.1 14.3A8.3 8.3 0 0 1 9.7 3.9a8.3 8.3 0 1 0 10.4 10.4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </nav>
 
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-
-  <main>
-    <section class="hero">
-      <span class="eyebrow animate-in">guide</span>
-      <h1 class="animate-in"><span class="gradient">optimized</span><br>opencode,<br>zero fluff</h1>
-      <p class="animate-in">Configuration tuning, performance optimization, and best practices for running OpenCode. Clean, minimal, built from real sessions.</p>
-      <p class="animate-in" style="margin-top: 1.5rem;">
-        <a href="setup.html" class="btn">
-          get started
-          <span class="btn-icon">→</span>
-        </a>
-        <a href="reference.html" class="btn btn-outline" style="margin-left: 0.5rem;">reference</a>
+  <main class="page" id="main">
+    <header class="hero">
+      <p class="kicker reveal">open workspace · free tier</p>
+      <h1 class="reveal" style="--d:60ms">delegate. spec. ship.<br>
+        <span class="hl">the workspace runs the loop</span><span class="caret" aria-hidden="true"></span>
+      </h1>
+      <p class="lede reveal" style="--d:120ms">
+        m3j-workspace is a production OpenCode environment: 81 active skills (+13 archived),
+        16 agents, and a ten-step delivery pipeline capped by a <b style="color:var(--text)">/finish</b>
+        quality gate. Everything here is built for free-tier models — small phases, one reviewable
+        PR each, zero build tooling.
       </p>
-    </section>
+      <div class="cta-row reveal" style="--d:180ms">
+        <a class="btn btn-solid" href="setup.html">read setup <span class="arrow">→</span></a>
+        <a class="btn btn-line" href="agents.html">run the fleet</a>
+      </div>
+    </header>
 
-    <hr class="accent-divider animate-in">
-
-    <section>
-      <div class="section-title animate-in">guide</div>
-      <div class="bento">
-        <div class="card-shell animate-in">
-          <a href="setup.html" class="card-core">
-            <span class="icon">⚙</span>
-            <h3>setup</h3>
-            <p>Database maintenance, config optimization, skills and agents management.</p>
-          </a>
-        </div>
-        <div class="card-shell animate-in">
-          <a href="reference.html" class="card-core">
-            <span class="icon">⎈</span>
-            <h3>reference</h3>
-            <p>Annotated config files, key paths, environment variables, and .gitignore patterns.</p>
-          </a>
-        </div>
-        <div class="card-shell animate-in">
-          <a href="termux.html" class="card-core">
-            <span class="icon">📱</span>
-            <h3>termux</h3>
-            <p>Run OpenCode on Android via Termux. Bootstrap from scratch, workspace template, and mobile tips.</p>
-          </a>
-        </div>
-        <div class="card-shell animate-in">
-          <a href="agents.html" class="card-core">
-            <span class="icon">◆</span>
-            <h3>agents</h3>
-            <p>The full agent fleet — 16 specialists for design, engineering, testing, docs, deployment, and more.</p>
-          </a>
-        </div>
-        <div class="card-shell animate-in">
-          <a href="workflow.html" class="card-core">
-            <span class="icon">⇀</span>
-            <h3>workflow</h3>
-            <p>The m3j workflow — a spec-to-merge pipeline: SPEC → ROADMAP → TASKS → one PR per phase, on free-tier models.</p>
-          </a>
-        </div>
-        <div class="card-shell animate-in">
-          <a href="trading.html" class="card-core">
-            <span class="icon">📈</span>
-            <h3>trading hub</h3>
-            <p>From first principles to quantitative execution. A structured curriculum across four progressive tiers.</p>
-          </a>
-        </div>
+    <section class="stat-strip reveal" aria-label="Workspace numbers">
+      <div class="stat-cell">
+        <div class="stat-num">81<span class="ac">/13</span></div>
+        <div class="stat-label">active / archived skills</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">16</div>
+        <div class="stat-label">agents in the roster</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">7</div>
+        <div class="stat-label">/finish gate steps</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">0</div>
+        <div class="stat-label">build steps in site</div>
       </div>
     </section>
 
     <section>
-      <div class="section-title animate-in">highlights</div>
-      <div class="list">
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">database optimization</div>
-            <div class="desc">Vacuum opencode.db, manage WAL size, reduce on-disk footprint by up to 50%.</div>
-          </div>
-        </div>
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">config compaction</div>
-            <div class="desc">Disable unused diagnostics, trim tool output, streamline your config.</div>
-          </div>
-        </div>
-        <div class="list-item animate-in">
-          <div class="dot"></div>
-          <div class="content">
-            <div class="label">skills &amp; agents</div>
-            <div class="desc">Per-project skills isolation, agent templates, and proper .gitignore workflows.</div>
-          </div>
-        </div>
+      <div class="section-head reveal">
+        <span class="idx">WH01</span>
+        <h2>the guide</h2>
+      </div>
+      <div class="module-grid reveal">
+        <a class="card-core" href="setup.html">
+          <span class="m-num">01 — setup</span>
+          <h3>configuration &amp; maintenance</h3>
+          <p>SQLite vacuum and WAL checkpointing, config compaction for cheap context,
+             per-project agents/skills isolation, and the <span style="color:var(--text)">/finish</span> gate.</p>
+          <span class="m-go">open <span class="arrow">→</span></span>
+        </a>
+        <a class="card-core" href="reference.html">
+          <span class="m-num">02 — reference</span>
+          <h3>annotated config &amp; paths</h3>
+          <p>The real <span style="color:var(--accent)">opencode.json</span>, every file path that matters,
+             the .gitignore reality, and the repo map.</p>
+          <span class="m-go">open <span class="arrow">→</span></span>
+        </a>
+        <a class="card-core" href="agents.html">
+          <span class="m-num">03 — agents</span>
+          <h3>the fleet</h3>
+          <p>Dispatch table, lane-by-lane roster, model assignments, and the sub-agent skills each one covers.</p>
+          <span class="m-go">open <span class="arrow">→</span></span>
+        </a>
+        <a class="card-core" href="workflow.html">
+          <span class="m-num">04 — workflow</span>
+          <h3>spec → merge</h3>
+          <p>The 10-step pipeline: SPEC → ROADMAP → TASKS, test-first scaffolding, one reviewable PR per phase.</p>
+          <span class="m-go">open <span class="arrow">→</span></span>
+        </a>
+      </div>
+    </section>
+
+    <section class="trio reveal">
+      <div class="cell">
+        <span class="tag">principle 01</span>
+        <b>delegate, don't duplicate</b>
+        <span>Every specialty already exists as an agent plus skills. Dispatch them — never reimplement.</span>
+      </div>
+      <div class="cell">
+        <span class="tag">principle 02</span>
+        <b>gates outlive tools</b>
+        <span>Models come and go. Test-first scaffolding, /finish, and fresh-context review are the value.</span>
+      </div>
+      <div class="cell">
+        <span class="tag">principle 03</span>
+        <b>verification before praise</b>
+        <span>Nothing ships on assertion. Acceptance commands pass, /finish reports 7/7, then it merges.</span>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>opencode setup guide</p>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>m3j-workspace · reference guide</span>
+      <span class="footer-note">static · offline · free-tier pinned <span class="ac">▸</span></span>
+    </div>
   </footer>
 
   <script src="script.js"></script>

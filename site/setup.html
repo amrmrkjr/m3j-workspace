@@ -3,102 +3,250 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>setup — opencode setup</title>
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css" rel="stylesheet">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="m3j-workspace setup — database maintenance, config compaction, per-project isolation, the /finish gate.">
+  <title>m3j-workspace · setup</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' fill='%230d0f11'/%3E%3Cpath d='M30 34 L66 48 L30 62 Z' fill='%23e5a93c'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
   <script>
-    if (localStorage.getItem("theme") === "light")
-      document.documentElement.setAttribute("data-theme", "light");
+    /* pre-paint theme — keeps first paint dark in default */
+    (function () {
+      try {
+        if (localStorage.getItem("theme") === "light")
+          document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    })();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">skip to content</a>
+
   <nav>
     <div class="nav-inner">
-      <a href="/" class="logo"><span>opencode</span> setup</a>
+      <a class="brand" href="./" aria-label="m3j-workspace — home">
+        m3j<span class="brand-caret">▸</span>workspace
+      </a>
       <div class="nav-links">
-        <a href="/">home</a>
-        <a href="setup.html" class="active">setup</a>
-        <a href="termux.html">termux</a>
+        <a href="./">home</a>
+        <a class="active" href="setup.html">setup</a>
         <a href="reference.html">reference</a>
         <a href="agents.html">agents</a>
         <a href="workflow.html">workflow</a>
-        <a href="trading.html">trading</a>
-        <button id="theme-toggle" aria-label="toggle theme">☾</button>
       </div>
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              aria-label="Toggle color theme" aria-pressed="false">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <path d="M20.1 14.3A8.3 8.3 0 0 1 9.7 3.9a8.3 8.3 0 1 0 10.4 10.4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </nav>
 
-  <main>
-    <div class="page-header animate-in">
-      <h1>setup</h1>
-      <p>Optimization recipes and best practices for running OpenCode.</p>
-    </div>
-
-    <hr class="accent-divider animate-in">
+  <main class="page" id="main">
+    <header class="page-head">
+      <p class="kicker reveal">setup</p>
+      <h1 class="reveal" style="--d:60ms">keep the workspace<br><span class="hl">lean and reproducible</span></h1>
+      <p class="lede reveal" style="--d:120ms">
+        Four recipes that keep OpenCode fast, cheap on context, and isolated per project —
+        all verified against the actual repo configuration.
+      </p>
+    </header>
 
     <section>
-      <div class="section-title animate-in">database</div>
-      <h2 class="section-heading animate-in">maintenance</h2>
-      <p class="section-sub animate-in">The SQLite database grows quickly. Regular vacuuming reduces disk usage and keeps things fast.</p>
-      <pre class="animate-in"># Vacuum the database
+      <div class="section-head reveal">
+        <span class="idx">01</span>
+        <h2>database maintenance</h2>
+      </div>
+      <p class="section-sub reveal">
+        Sessions live in a SQLite database under the user data dir. It grows without bound; a routine
+        vacuum reclaims pages and a WAL checkpoint keeps the write-ahead log in check.
+      </p>
+      <div class="term reveal">
+        <div class="term-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="term-file">~/.local/share/opencode/</span>
+        </div>
+        <pre class="term-pre"><span class="dim"># vacate dead rows — runs online, safe mid-session</span>
 sqlite3 ~/.local/share/opencode/opencode.db "VACUUM;"
 
-# Check WAL size
+<span class="dim"># how big is the write-ahead log right now?</span>
 ls -lh ~/.local/share/opencode/opencode.db-wal
 
-# Manual checkpoint
+<span class="dim"># force a checkpoint and truncate the WAL to zero</span>
 sqlite3 ~/.local/share/opencode/opencode.db "PRAGMA wal_checkpoint(TRUNCATE);"</pre>
+      </div>
+      <div class="note reveal">
+        <span class="note-tag">db</span>
+        <span>Do <b>not</b> run these against the repo — the database is per-machine state under
+        <span class="chip">~/.local/share/opencode/</span>, not part of <span class="chip">m3j-workspace</span>.
+        The repo keeps it out of git; see the <a href="reference.html#gitignore">.gitignore</a> section.</span>
+      </div>
     </section>
 
     <section>
-      <div class="section-title animate-in">configuration</div>
-      <h2 class="section-heading animate-in">opencode.jsonc</h2>
-      <p class="section-sub animate-in">Key flags for a lean config. Trim tool output, disable unused features.</p>
-      <pre class="animate-in">{
+      <div class="section-head reveal">
+        <span class="idx">02</span>
+        <h2>config compaction</h2>
+      </div>
+      <p class="section-sub reveal">
+        Free-tier context is the scarcest resource. The workspace compacts automatically instead of
+        pruning history: reserved tokens and tail turns keep the recent thread intact while the wall of
+        identical tool output stays away.
+      </p>
+      <p class="section-sub reveal">
+        The file at the project root, <span class="chip accent">opencode.json</span>, pins the model and
+        sets compaction policy:
+      </p>
+      <div class="term reveal">
+        <div class="term-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="term-file">opencode.json</span>
+        </div>
+        <pre class="term-pre">{
+  "$schema": "https://opencode.ai/config.json",
+  <span class="dim">// one provider, one model — the fleet overrides per agent</span>
+  "model": "opencode/deepseek-v4-flash-free",
+
+  <span class="dim">// per-project skill library, loaded only here</span>
+  "skills": { "paths": [".agents/skills"] },
+
+  <span class="dim">// primary-agent contract loaded with every session</span>
+  "instructions": ["AGENTS.md"],
+
+  <span class="dim">// plan + compaction sub-agents stay on the same free model</span>
+  "agent": {
+    "plan":       { "model": "opencode/deepseek-v4-flash-free" },
+    "compaction": { "model": "opencode/deepseek-v4-flash-free" }
+  },
+
+  <span class="dim">// auto-compact, keep 10k tokens reserved + 2 tail turns</span>
   "compaction": {
-    "enabled": true,
-    "max_context_tokens": 8000,
-    "strategy": "balanced"
-  },
-  "tool_output": {
-    "max_length": 500,
-    "truncation": "head"
-  },
-  "model": {
-    "default": "claude-sonnet-4-20250514",
-    "small": "claude-haiku-3-5-20241022"
-  },
-  "permission": "allow",
-  "lsp": false,
-  "formatter": false
-}</pre>
-    </section>
-
-    <section>
-      <div class="section-title animate-in">agents &amp; skills</div>
-      <h2 class="section-heading animate-in">per-project isolation</h2>
-      <p class="section-sub animate-in">Keep skills and agents local to each project to avoid global pollution and keep configs clean.</p>
-      <pre class="animate-in"># Project structure
-my-project/
-├── .agents/skills/    # project-specific skills
-├── .opencode/
-│   └── agents/        # project-specific agents
-└── opencode.json      # references local paths
-
-# opencode.json
-{
-  "skills": {
-    "paths": [".agents/skills"]
+    "auto": true,
+    "prune": false,
+    "reserved": 10000,
+    "tail_turns": 2
   }
 }</pre>
+      </div>
+      <div class="note reveal">
+        <span class="note-tag">tip</span>
+        <span>The machine-level config at <span class="chip">~/.config/opencode/opencode.jsonc</span> goes
+        leaner — <span class="chip">prune: true</span>, <span class="chip">tail_turns: 1</span>,
+        <span class="chip">reserved: 2000</span> — and caps tool output at
+        <span class="chip">500 lines / 20 KB</span>. Project policy wins where both apply.</span>
+      </div>
     </section>
 
+    <section>
+      <div class="section-head reveal">
+        <span class="idx">03</span>
+        <h2>per-project isolation</h2>
+      </div>
+      <p class="section-sub reveal">
+        Nothing global leaks into a project. Skills are loaded from the repo, agents are defined next to
+        the code, and the skills stay version-controlled while runtime junk stays out.
+      </p>
+      <div class="rowlist reveal">
+        <div class="row">
+          <span class="k">skills</span>
+          <span class="v"><span class="chip">.agents/skills/</span> — one directory per skill, each
+            with a <span class="chip">SKILL.md</span>. Resolved via <span class="chip">skills.paths</span>
+            above, so <span class="chip">~/.agents/</span> never gets polluted. Archived skills move to
+            <span class="chip">.agents/archive/skills/</span>, history kept in git.
+          </span>
+        </div>
+        <div class="row">
+          <span class="k">agents</span>
+          <span class="v"><span class="chip">.opencode/agents/</span> — one Markdown per agent
+            (frontmatter: description, model, tools, mode; then the body prompt). 15 m3j-* specialists
+            plus <span class="chip">ultra-minimal</span> live here.
+          </span>
+        </div>
+        <div class="row">
+          <span class="k">commands</span>
+          <span class="v"><span class="chip">.opencode/commands/finish.md</span> — the <b>/finish</b>
+            gate, dispatched to <span class="chip">m3j-sentinel</span>.
+          </span>
+        </div>
+        <div class="row">
+          <span class="k">gitignore</span>
+          <span class="v">The <span class="chip">.gitignore</span> ignores <span class="chip">.agents/*</span>
+            then re-includes skills and archive — so skills travel with the repo, and only skills travel.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head reveal">
+        <span class="idx">04</span>
+        <h2>the /finish gate</h2>
+      </div>
+      <p class="section-sub reveal">
+        Before anything merges, a quality gate runs. It is a code-free gate — no build step, just one
+        table to fill (all pass or fail reported, never skipped). Local and CI check the same facts.
+      </p>
+      <div class="rowlist reveal">
+        <div class="row">
+          <span class="k">01 — sanity</span>
+          <span class="v">no debug junk, no empty/broken files, nothing above 1&nbsp;MB in the diff</span>
+        </div>
+        <div class="row">
+          <span class="k">02 — security</span>
+          <span class="v">secret scan, injection patterns, exposed credentials and paths</span>
+        </div>
+        <div class="row">
+          <span class="k">03 — style</span>
+          <span class="v">naming, no trailing whitespace, no banned font families (per the /finish style step)</span>
+        </div>
+        <div class="row">
+          <span class="k">04 — quality</span>
+          <span class="v">design-system compliance for site changes; custom cubic-bezier motion only</span>
+        </div>
+        <div class="row">
+          <span class="k">05 — diff</span>
+          <span class="v">scope creep check — the diff matches the stated intent</span>
+        </div>
+        <div class="row">
+          <span class="k">06 — verify</span>
+          <span class="v">git status clean, remote in sync, test suite green</span>
+        </div>
+        <div class="row">
+          <span class="k">07 — ship</span>
+          <span class="v">explicit merge / PR / cleanup verdict with the exact command</span>
+        </div>
+      </div>
+      <div class="term reveal">
+        <div class="term-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="term-file">local mirror of CI — run before claiming done</span>
+        </div>
+        <pre class="term-pre"><span class="ok">$</span> bash scripts/validate.sh
+== required files ==   ✅ 15/15
+== site pages ==       ✅ 5 site/*.html pages
+== site nav sync ==    ✅ identical across pages
+== rtk filters ==      ✅ schema_version = 1
+<strong style="color:var(--text)">== summary ==  ✅ PASS — all checks green</strong></pre>
+      </div>
+      <div class="note warn reveal">
+        <span class="note-tag">gate</span>
+        <span>CI in <span class="chip">.github/workflows/validate.yml</span> only checks file presence and
+        nav sync. <span class="chip">scripts/validate.sh</span> mirrors it locally — offline, zero deps.
+        Skipping a gate is a human decision, made explicitly.</span>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p>opencode setup guide</p>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>m3j-workspace · reference guide</span>
+      <span class="footer-note">static · offline · free-tier pinned <span class="ac">▸</span></span>
+    </div>
   </footer>
 
   <script src="script.js"></script>

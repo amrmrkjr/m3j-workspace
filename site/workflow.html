@@ -3,257 +3,279 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>workflow — opencode setup</title>
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css" rel="stylesheet">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="m3j-workspace workflow — SPEC → ROADMAP → TASKS, test-first scaffolding, /finish gate, one reviewable PR per phase on free-tier models.">
+  <title>m3j-workspace · workflow</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' fill='%230d0f11'/%3E%3Cpath d='M30 34 L66 48 L30 62 Z' fill='%23e5a93c'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>>_</text></svg>">
+  <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
   <script>
-    if (localStorage.getItem("theme") === "light")
-      document.documentElement.setAttribute("data-theme", "light");
+    /* pre-hydrate theme — keeps state dark in default */
+    (function () {
+      try {
+        if (localStorage.getItem("theme") === "light")
+          document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    })();
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#main">skip to content</a>
+
   <nav>
     <div class="nav-inner">
-      <a href="/" class="logo"><span>opencode</span> setup</a>
+      <a class="brand" href="./" aria-label="m3j-workspace — home">
+        m3j<span class="brand-caret">▸</span>workspace
+      </a>
       <div class="nav-links">
-        <a href="/">home</a>
+        <a href="./">home</a>
         <a href="setup.html">setup</a>
-        <a href="termux.html">termux</a>
         <a href="reference.html">reference</a>
         <a href="agents.html">agents</a>
-        <a href="workflow.html" class="active">workflow</a>
-        <a href="trading.html">trading</a>
-        <button id="theme-toggle" aria-label="toggle theme">☾</button>
+        <a class="active" href="workflow.html">workflow</a>
       </div>
+      <button id="theme-toggle" class="theme-toggle" type="button"
+              aria-label="Toggle color theme" aria-pressed="false">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        </svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" focusable="false">
+          <path d="M20.1 14.3A8.3 8.3 0 0 1 9.7 3.9a8.3 8.3 0 1 0 10.4 10.4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </nav>
 
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-
-  <main>
-    <section class="hero">
-      <span class="eyebrow animate-in">workflow</span>
-      <h1 class="animate-in"><span class="gradient">spec → merge</span><br>the m3j workflow</h1>
-      <p class="animate-in">An end-to-end AI coding workflow for OpenCode, free-tier models only. An idea becomes a reviewed, mergeable PR through small phases — each phase ships as one reviewable change.</p>
-    </section>
-
-    <hr class="accent-divider animate-in">
+  <main class="page" id="main">
+    <header class="page-head">
+      <p class="kicker reveal">workflow</p>
+      <h1 class="reveal" style="--d:60ms">SPEC → ROADMAP → TASKS<br><span class="hl">ten steps to merge</span></h1>
+      <p class="lede reveal" style="--d:120ms">
+        An end-to-end AI coding pipeline for free-tier models (the <span class="chip">m3j-workflow</span>
+        skill). An idea becomes a reviewed, mergeable PR through small phases — one phase per session,
+        one reviewable PR per phase, every gate intact.
+      </p>
+    </header>
 
     <section>
-      <div class="section-title animate-in">the pipeline</div>
-      <h2 class="section-heading animate-in">ten steps to a mergeable PR</h2>
-      <p class="section-sub animate-in">Working files — <span class="tag">SPEC.md</span> <span class="tag">ROADMAP.md</span> <span class="tag">TASKS.md</span> — live at the project root, seeded from <span style="font-family: 'Geist Mono', monospace; font-size: 0.85em;">templates/</span>. A quick inventory first: create or refresh whatever's missing. Run the steps in order; each done-criterion must be met before the next starts.</p>
-      <div class="bento">
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">01</span>
-            <h3>SPEC</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">plan the contract</p>
-            <p>m3j-planner writes SPEC.md from template — problem, users, required behavior, architecture, security, pinned dependency versions, non-goals, acceptance criteria.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">m3j-planner</span></p>
+      <div class="section-head reveal">
+        <span class="idx">01</span>
+        <h2>the pipeline</h2>
+      </div>
+      <p class="section-sub reveal">
+        Steps run in order; each step's done-criterion gates the next. Every step already has an owner
+        and a skill — the pipeline dispatches, it never re-implements.
+      </p>
+      <div class="pipeline reveal">
+        <div class="pstep">
+          <span class="n">00</span>
+          <div>
+            <div class="s-title">inventory</div>
+            <p class="s-desc">Which of AGENTS.md / SPEC.md / ROADMAP.md / TASKS.md already exist — create
+              or refresh whatever's missing from the skill's templates.</p>
           </div>
+          <div class="s-agent"><b>primary</b></div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">02</span>
-            <h3>ROADMAP</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">sequence the phases</p>
-            <p>m3j-planner writes ROADMAP.md from template — phases with checkable exit criteria and explicit dependencies, ≤3 tasks per phase.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">m3j-planner</span></p>
+        <div class="pstep">
+          <span class="n">01</span>
+          <div>
+            <div class="s-title">SPEC</div>
+            <p class="s-desc">The contract: problem, users, required behavior, architecture, security,
+              pinned dependency versions, non-goals, acceptance criteria. Done when every criterion is
+              testable by a command or a human action.</p>
           </div>
+          <div class="s-agent">m3j-planner <b>→</b> nemotron-3-ultra-free</div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">03</span>
-            <h3>TASKS</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">slice vertically</p>
-            <p>m3j-planner writes TASKS.md from template — vertical slices, each delivering working value alone, with an acceptance command plus expected output and TDD checkbox steps.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">m3j-planner</span></p>
+        <div class="pstep">
+          <span class="n">02</span>
+          <div>
+            <div class="s-title">ROADMAP</div>
+            <p class="s-desc">Phases ordered by dependency — each with deliverables, explicit dependencies,
+              and a checkable exit criterion. ≤3 tasks per phase, each phase shippable as one PR.</p>
           </div>
+          <div class="s-agent">m3j-planner</div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">04</span>
-            <h3>test scaffold</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">harness before features</p>
-            <p>m3j-tester sets up the harness — test runner, lint, format, typecheck — before any feature code exists. It must run green on an empty baseline.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">m3j-tester</span></p>
+        <div class="pstep">
+          <span class="n">03</span>
+          <div>
+            <div class="s-title">TASKS</div>
+            <p class="s-desc">Vertical slices — every task delivers working value alone, with an exact
+              acceptance command plus expected output, and a TDD checkbox sequence taken in order.</p>
           </div>
+          <div class="s-agent">m3j-planner</div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">05</span>
-            <h3>one phase</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">tdd, one phase per session</p>
-            <p>m3j-executor implements ONE phase from TASKS.md, TDD. One phase per session — never the whole roadmap in one context.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">m3j-executor</span></p>
+        <div class="pstep">
+          <span class="n">04</span>
+          <div>
+            <div class="s-title">test scaffold first</div>
+            <p class="s-desc">Runner, lint, format, typecheck — green on a trivial baseline before any
+              feature code exists. The harness proves itself before anything else happens.</p>
           </div>
+          <div class="s-agent">m3j-tester <b>→</b> north-mini-code-free</div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">06</span>
-            <h3>/finish</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">local gate</p>
-            <p>m3j-sentinel runs the 7-step quality gate. All 7 steps report pass or fail — every failure is fixed and re-verified.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">m3j-sentinel</span></p>
+        <div class="pstep">
+          <span class="n">05</span>
+          <div>
+            <div class="s-title">one phase, TDD</div>
+            <p class="s-desc">Execute exactly one phase from TASKS.md, red → green → refactor → commit.
+              Never the whole roadmap in one context.</p>
           </div>
+          <div class="s-agent">m3j-executor</div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">07</span>
-            <h3>one PR</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">small &amp; reviewable</p>
-            <p>m3j-devops opens one small, reviewable PR containing only this phase's change, naming the phase and its acceptance criteria.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">m3j-devops</span></p>
+        <div class="pstep">
+          <span class="n">06</span>
+          <div>
+            <div class="s-title">/finish</div>
+            <p class="s-desc">The 7-step quality gate — sanity, security, style, quality, diff, verify,
+              ship. Every step reports pass or fail; every failure is fixed and re-verified.</p>
           </div>
+          <div class="s-agent">m3j-sentinel <b>→</b> laguna-s-2.1-free</div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">08</span>
-            <h3>fresh-context review</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">never grade your own work</p>
-            <p>A new m3j-triage or m3j-sentinel session — with no memory of the implementation — reviews the PR. Never the implementing session.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">m3j-triage</span></p>
+        <div class="pstep">
+          <span class="n">07</span>
+          <div>
+            <div class="s-title">one PR</div>
+            <p class="s-desc">One small, reviewable PR containing only this phase's change — description
+              names the phase and its acceptance criteria.</p>
           </div>
+          <div class="s-agent">m3j-devops</div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">09</span>
-            <h3>fix / retest</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">verify before accepting</p>
-            <p>m3j-executor fixes each finding, then re-runs the acceptance commands and /finish. m3j-triage vets each suggestion for technical soundness first.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">m3j-executor</span> <span class="tag">m3j-triage</span></p>
+        <div class="pstep">
+          <span class="n">08</span>
+          <div>
+            <div class="s-title">fresh-context review</div>
+            <p class="s-desc">A new session — no memory of the implementation — reviews the PR. The
+              implementing session never grades its own work.</p>
           </div>
+          <div class="s-agent">m3j-triage <b>→</b> longcat-2.0-free</div>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">10</span>
-            <h3>human merge gate</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">nothing merges without you</p>
-            <p>Present the PR with the checklist — diff scope, tests + CI, review threads, docs, manual check. Skipping a gate is a human decision, made explicitly.</p>
-            <p style="margin-top: 0.75rem;"><span class="tag">human</span></p>
+        <div class="pstep">
+          <span class="n">09</span>
+          <div>
+            <div class="s-title">fix / retest loop</div>
+            <p class="s-desc">Each finding is vetted for technical soundness before fixing, then the
+              acceptance commands and /finish re-run. Findings rejected with reasons recorded.</p>
           </div>
+          <div class="s-agent">m3j-executor + m3j-triage</div>
         </div>
-
+        <div class="pstep">
+          <span class="n">10</span>
+          <div>
+            <div class="s-title">human merge gate</div>
+            <p class="s-desc">Checklist: intended diff only, tests + CI green, review threads resolved,
+              docs match, manual check. Nothing merges without a human saying yes.</p>
+          </div>
+          <div class="s-agent"><b>human</b></div>
+        </div>
       </div>
     </section>
 
     <section>
-      <div class="section-title animate-in">templates</div>
-      <h2 class="section-heading animate-in">three files, fixed shape</h2>
-      <p class="section-sub animate-in">Every section is fixed — do not delete, reorder, or rename. One line per item, no essays, every claim checkable. Seeded from <span style="font-family: 'Geist Mono', monospace; font-size: 0.85em;">templates/</span> inside the skill.</p>
-      <div class="bento">
-
-        <div class="card-shell card-wide animate-in">
-          <div class="card-core">
-            <span class="icon">◈</span>
-            <h3>SPEC.md</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">the contract</p>
-            <p>The contract for what we build. Every acceptance criterion must be testable by a command or a human action; every risky dependency has an exact pinned version — no <span style="font-family: 'Geist Mono', monospace;">^</span> ranges.</p>
-            <p style="margin-top: 0.75rem; font-family: 'Geist Mono', 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-secondary); line-height: 2;">
-              # SPEC: &lt;project name&gt;<br>
-              ## problem statement<br>
-              ## intended users<br>
-              ## required behavior &amp; UX<br>
-              ## architecture &amp; components<br>
-              ## security &amp; privacy<br>
-              ## supported versions<br>
-              ## non-goals<br>
-              ## acceptance criteria<br>
-              ## notes
-            </p>
-          </div>
+      <div class="section-head reveal">
+        <span class="idx">02</span>
+        <h2>three working files, fixed shape</h2>
+      </div>
+      <p class="section-sub reveal">
+        Live at the project root, seeded from <span class="chip">.agents/skills/m3j-workflow/templates/</span>.
+        Sections are fixed — never delete, reorder or rename. One line per item, no essays, every claim
+        checkable. Keep each file under ~200 lines; split a phase that outgrows it.
+      </p>
+      <div class="rowlist reveal">
+        <div class="row" style="grid-template-columns: 9.5rem 1fr">
+          <span class="k">SPEC.md</span>
+          <span class="v">The contract — what we build and how we prove it. Risky dependencies pinned
+            exactly, no <span class="chip">^</span> ranges.</span>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">⇧</span>
-            <h3>ROADMAP.md</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">the phases</p>
-            <p>Phases to delivery, ordered by dependency. Each phase ships as one reviewable PR, ≤3 tasks per phase, exit criteria checkable.</p>
-            <p style="margin-top: 0.75rem; font-family: 'Geist Mono', 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-secondary); line-height: 2;">
-              # ROADMAP: &lt;project name&gt;<br>
-              ## phase 1: &lt;name&gt;<br>
-              &nbsp;&nbsp;deliverables<br>
-              &nbsp;&nbsp;dependencies<br>
-              &nbsp;&nbsp;exit criteria<br>
-              &nbsp;&nbsp;acceptance baseline
-            </p>
-          </div>
+        <div class="row" style="grid-template-columns: 9.5rem 1fr">
+          <span class="k">ROADMAP.md</span>
+          <span class="v">The phases — ordered by dependency, each shipping as one reviewable PR with a
+            checkable exit criterion.</span>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">☑</span>
-            <h3>TASKS.md</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">the executable slice</p>
-            <p>Vertical slices — each task delivers working value on its own. Exact acceptance command plus expected output, TDD steps ticked in order, never skipped.</p>
-            <p style="margin-top: 0.75rem; font-family: 'Geist Mono', 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-secondary); line-height: 2;">
-              # TASKS: &lt;project name&gt;<br>
-              ## task T1: &lt;title&gt;<br>
-              &nbsp;&nbsp;phase<br>
-              &nbsp;&nbsp;files touched<br>
-              &nbsp;&nbsp;acceptance: command + expected<br>
-              &nbsp;&nbsp;tdd: red → green → refactor → commit
-            </p>
-          </div>
+        <div class="row" style="grid-template-columns: 9.5rem 1fr">
+          <span class="k">TASKS.md</span>
+          <span class="v">The executable slices — vertical, phase-tagged, with acceptance command +
+            expected output and a TDD step list that is never skipped.</span>
         </div>
-
       </div>
     </section>
 
     <section>
-      <div class="section-title animate-in">principles</div>
-      <h2 class="section-heading animate-in">what holds the pipeline together</h2>
-      <p class="section-sub animate-in">Free-tier models are already pinned per agent — planning and gates on <span class="tag">nemotron-3-ultra-free</span>, execution on <span class="tag">deepseek-v4-flash-free</span>, tests on <span class="tag">north-mini-code-free</span>. Don't override them.</p>
-      <div class="bento">
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">↻</span>
-            <h3>reuse, not duplicate</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">dispatch, don't rebuild</p>
-            <p>The repo already has agents and skills for every step. Your job is to dispatch them in the right order with the right inputs — never reimplement their behavior.</p>
-          </div>
+      <div class="section-head reveal">
+        <span class="idx">03</span>
+        <h2>principles</h2>
+      </div>
+      <div class="trio reveal">
+        <div class="cell">
+          <span class="tag">P1</span>
+          <b>reuse, don't duplicate</b>
+          <span>The fleet and skills already exist for every step. Your job is dispatch order and
+            inputs — never reimplement a covered behaviour.</span>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">▤</span>
-            <h3>small phases, small PRs</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">token economy</p>
-            <p>One phase per execution session, never the whole roadmap. Compact handoffs — pass paths and acceptance commands, not file dumps or conversation history.</p>
-          </div>
+        <div class="cell">
+          <span class="tag">P2</span>
+          <b>gates outlive tools</b>
+          <span>Any model can write code. The value is the test-first scaffold, /finish, fresh-context
+            review and the human merge check. Never weaken a gate to save tokens.</span>
         </div>
-
-        <div class="card-shell animate-in">
-          <div class="card-core">
-            <span class="icon">⚠</span>
-            <h3>the tool is replaceable, the gates are not</h3>
-            <p style="color: var(--accent); font-size: 0.8rem; font-weight: 500;">the gates are the point</p>
-            <p>Any model can write code. The value lives in the gates — test scaffold first, /finish, fresh-context review, human merge check. Never weaken or skip a gate to save tokens.</p>
-          </div>
+        <div class="cell">
+          <span class="tag">P3</span>
+          <b>small phases only</b>
+          <span>One phase per session, compact handoffs (paths + acceptance commands, never file dumps or
+            history). Token economy is the architecture.</span>
         </div>
+      </div>
+    </section>
 
+    <section>
+      <div class="section-head reveal">
+        <span class="idx">04</span>
+        <h2>free-tier reality</h2>
+      </div>
+      <p class="section-sub reveal">
+        Everything runs on free-tier models, pinned per agent — the pipeline is built around their
+        context budgets, not against them.
+      </p>
+      <div class="rowlist reveal">
+        <div class="row">
+          <span class="k">planning</span>
+          <span class="v"><span class="chip">nemotron-3-ultra-free</span> — SPEC / ROADMAP / TASKS
+            (m3j-planner)</span>
+        </div>
+        <div class="row">
+          <span class="k">execution</span>
+          <span class="v"><span class="chip">deepseek-v4-flash-free</span> — phases, PRs, tooling
+            (m3j-executor, m3j-devops)</span>
+        </div>
+        <div class="row">
+          <span class="k">quality</span>
+          <span class="v"><span class="chip">laguna-s-2.1-free</span> — gate and review
+            (m3j-sentinel, m3j-debugger) · <span class="chip">longcat-2.0-free</span> — triage & research
+            (m3j-triage, m3j-researcher)</span>
+        </div>
+        <div class="row">
+          <span class="k">tests</span>
+          <span class="v"><span class="chip">north-mini-code-free</span> — harness and suites (m3j-tester)</span>
+        </div>
+        <div class="row">
+          <span class="k">rule</span>
+          <span class="v">models stay pinned in <span class="chip">.opencode/agents/*.md</span>.
+            Overriding a model is a deliberate human change — never an agent impulse.</span>
+        </div>
+      </div>
+      <div class="note reveal">
+        <span class="note-tag">source</span>
+        <span>The canonical write-up lives in <span class="chip">docs/WORKFLOW.md</span> — the agent-facing
+        map with the agent-per-step dispatch table. This page is the human mirror.</span>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>opencode setup guide</p>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>m3j-workspace · reference guide</span>
+      <span class="footer-note">static · offline · free-tier pinned <span class="ac">▸</span></span>
+    </div>
   </footer>
 
   <script src="script.js"></script>

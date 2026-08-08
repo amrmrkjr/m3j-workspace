@@ -130,11 +130,9 @@ m3j-workspace/
 ├── site/                  # static reference guide (HTML/CSS/JS)
 │   ├── index.html         # homepage
 │   ├── setup.html         # optimization recipes
-│   ├── termux.html        # Android setup guide
 │   ├── reference.html     # annotated config + paths
 │   ├── agents.html        # agent fleet showcase
 │   ├── workflow.html      # AI coding workflow
-│   ├── trading.html       # trading hub
 │   ├── style.css          # design system
 │   └── script.js          # theme toggle, scroll reveal
 ├── opencode.json          # project-level config
