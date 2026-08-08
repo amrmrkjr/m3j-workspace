@@ -19,6 +19,7 @@ open site/index.html
 | **Reference** | Annotated global config with explanations, all key file paths, `.gitignore` patterns for OpenCode artifacts |
 | **Termux** | OpenCode on Android via Termux — native install, no root |
 | **Agents** | Full agent fleet roster with dispatch hierarchy, model assignments, and workflow explanation |
+| **Workflow** | Titus AI coding workflow port — SPEC → ROADMAP → TASKS pipeline, test-first scaffolding, quality gates, one PR per phase on free-tier models |
 
 ## Structure
 
@@ -29,6 +30,7 @@ site/
 ├── reference.html   # annotated config + paths
 ├── termux.html      # Android / Termux guide
 ├── agents.html      # agent fleet showcase
+├── workflow.html    # end-to-end AI coding pipeline (titus-workflow)
 ├── style.css        # Ethereal Glass theme
 └── script.js        # theme toggle, scroll reveal
 ```

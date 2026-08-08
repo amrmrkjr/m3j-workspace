@@ -5,3 +5,5 @@
 site-screenshot.png
 node_modules/
 skills-lock.json
+.env
+.env.*
