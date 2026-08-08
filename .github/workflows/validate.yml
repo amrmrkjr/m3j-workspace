@@ -19,3 +19,9 @@ jobs:
         run: |
           [ -f opencode.json ] && echo "✅ opencode.json" || echo "❌ opencode.json"
           [ -f AGENTS.md ] && echo "✅ AGENTS.md" || echo "❌ AGENTS.md"
+      - name: Check titus-workflow skill
+        run: |
+          [ -f .agents/skills/titus-workflow/SKILL.md ] && echo "✅ .agents/skills/titus-workflow/SKILL.md" || echo "❌ .agents/skills/titus-workflow/SKILL.md"
+          for f in .agents/skills/titus-workflow/templates/*.md; do
+            [ -f "$f" ] && echo "✅ $f" || echo "❌ $f"
+          done
