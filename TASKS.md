@@ -1,4 +1,4 @@
-# TASKS: opencode_setup — current state
+# TASKS: m3j-workspace — current state
 
 Granular, grabbable tasks reflecting the current actual state. ✅ = completed and directly verifiable; ⬜ = open.
 
@@ -27,7 +27,7 @@ Granular, grabbable tasks reflecting the current actual state. ✅ = completed a
 
 ## Done ✅ (directly verifiable)
 
-- [x] **Port: m3j-workflow skill** — `.agents/skills/m3j-workflow/SKILL.md` + `templates/` (SPEC/ROADMAP/TASKS) | verified: files exist, CI checks them.
+- [x] **Build: m3j-workflow skill** — `.agents/skills/m3j-workflow/SKILL.md` + `templates/` (SPEC/ROADMAP/TASKS) | verified: files exist, CI checks them.
 - [x] **Agent fleet** — 16 `m3j-*` + `ultra-minimal` under `.opencode/agents/` | verified: `ls .opencode/agents/`.
 - [x] **/finish quality gate** — `.opencode/commands/finish.md` | verified: frontmatter (agent=m3j-sentinel, subtask) + 7 steps.
 - [x] **Site 7 pages, shared nav** — `site/*.html` (index, setup, termux, reference, agents, workflow, trading) | verified: nav-sync check in `scripts/validate.sh` passes.

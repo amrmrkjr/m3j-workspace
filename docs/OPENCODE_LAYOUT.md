@@ -5,17 +5,17 @@ Purpose: a map of this repo for agents — where to look for what, and the conve
 ## Tree (top 2–3 levels)
 
 ```
-opencode_setup/
+m3j-workspace/
 ├── opencode.json                # primary config: model, skills path, instructions
 ├── AGENTS.md                    # primary-agent contract + dispatch table (read first)
 ├── README.md                    # human-facing overview + badge roster
-├── SPEC.md · ROADMAP.md · TASKS.md   # Titus-workflow working files (root)
+├── SPEC.md · ROADMAP.md · TASKS.md   # m3j-workflow working files (root)
 ├── docs/                        # agent-facing docs
 │   ├── OPENCODE_LAYOUT.md       #   this file
-│   ├── SKILLS.md                #   index of .agents/skills/ (~94 skills, grouped)
+│   ├── SKILLS.md                #   index of .agents/skills/ (~94 skills (81 active + 13 archived), grouped)
 │   └── WORKFLOW.md              #   10-step pipeline, agent-per-step map
 ├── .agents/
-│   └── skills/                  # ~94 skills, one dir per skill (SKILL.md each)
+│   └── skills/                  # ~94 skills (81 active + 13 archived), one dir per skill (SKILL.md each)
 ├── .opencode/
 │   ├── agents/                  # 16 m3j-* agents + ultra-minimal
 │   ├── commands/finish.md       # /finish — 7-step quality gate (@m3j-sentinel)
@@ -42,7 +42,7 @@ opencode_setup/
 | `AGENTS.md` | Primary-agent contract | Dispatch table for all m3j-* agents; "be concise, delegate, verify before claiming done". Read before any delegation. |
 | `.opencode/agents/*.md` | Agent fleet | 16 `m3j-*` specialists + `ultra-minimal`. One Markdown per agent: frontmatter (description, model, tools, mode) + body prompt. Models are free-tier pinned — don't override. |
 | `.opencode/commands/finish.md` | `/finish` command | 7-step quality gate (sanity → security → style → quality → diff → verify → ship), dispatched to `m3j-sentinel`. Never weaken a gate. |
-| `.agents/skills/` | Skill library | ~94 per-project skills, one dir per skill with `SKILL.md`. Path is per-project (`.agents/skills/`), not `~/.agents/`. Indexed in `docs/SKILLS.md`. |
+| `.agents/skills/` | Skill library | ~94 skills (81 active + 13 archived), one dir per skill with `SKILL.md`. Path is per-project (`.agents/skills/`), not `~/.agents/`. Indexed in `docs/SKILLS.md`. |
 | `docs/` | Agent-facing docs | Layout (this), skills index, workflow. Keep terse, table-heavy — agents read them. |
 | `site/` | Static reference guide | 7 HTML pages sharing one nav partial (home → setup → termux → reference → agents → workflow → trading). Design language: bento grid, double-bezel cards. Adding/removing a page = update every nav + homepage card grid. |
 | `.github/workflows/validate.yml` | CI | Existence checks only (agent files, site pages, config, m3j-workflow skill + templates). No builds, no tests. Keep it code-only. |

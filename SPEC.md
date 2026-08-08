@@ -1,7 +1,7 @@
-# SPEC: opencode_setup workspace
+# SPEC: m3j-workspace
 
 ## Problem Statement
-A single command-driven workspace for running OpenCode on free-tier models, with a fleet of specialist sub-agents, ~94 skills, a static reference site, and a tested development workflow. Without it, work is ad-hoc: no dispatch structure, no gates, no consistent process. This SPEC stabilizes the repo's purpose and the process it runs on.
+A single command-driven workspace for running OpenCode on free-tier models, with a fleet of specialist sub-agents, ~94 skills (81 active + 13 archived), a static reference site, and a tested development workflow. Without it, work is ad-hoc: no dispatch structure, no gates, no consistent process. This SPEC stabilizes the repo's purpose and the process it runs on.
 
 ## Intended Users
 - **Primary agent (me)** — reads AGENTS.md, dispatches m3j-* agents per task.
@@ -10,7 +10,7 @@ A single command-driven workspace for running OpenCode on free-tier models, with
 
 ## Required Behavior & UX
 1. Any task maps to an agent via the AGENTS.md dispatch table — no task is done inline for specialized work.
-2. The Titus workflow (docs/WORKFLOW.md) is the development process: SPEC → ROADMAP → TASKS → one phase per session → gates → one small PR.
+2. The m3j workflow (docs/WORKFLOW.md) is the development process: SPEC → ROADMAP → TASKS → one phase per session → gates → one small PR.
 3. Skills live per-project in `.agents/skills/` — never `~/.agents/skills/` — and are indexed in docs/SKILLS.md.
 4. The static site (7 HTML pages, shared nav) documents setup, termux, reference material, the agent roster, the workflow, and the trading hub.
 5. CI and the local `scripts/validate.sh` gate file presence and nav sync; they stay code-only (no builds, no tests).
@@ -19,7 +19,7 @@ A single command-driven workspace for running OpenCode on free-tier models, with
 - **opencode.json** — model `opencode/big-pickle`; plan/compact split `nemotron-3-ultra-free` / `deepseek-v4-flash-free`; skills path `.agents/skills`; instructions AGENTS.md.
 - **.opencode/agents/** — 16 m3j-* specs + `ultra-minimal`. Each: frontmatter (description, model, mode, tools) + prompt body. Free-tier pinned.
 - **.opencode/commands/finish.md** — `/finish` 7-step quality gate → `m3j-sentinel`.
-- **.agents/skills/** — ~94 skills; the wiring to workflow steps is in docs/WORKFLOW.md.
+- **.agents/skills/** — ~94 skills (81 active + 13 archived); the wiring to workflow steps is in docs/WORKFLOW.md.
 - **site/** — static HTML/CSS/JS reference, shared nav partial, bento/double-bezel design system, no build step.
 - **.github/workflows/validate.yml + scripts/validate.sh** — file-presence CI + local mirror.
 - **.rtk/filters.toml** — RTK output prettifying for noisy commands.
@@ -57,7 +57,7 @@ Rules: agent files never override models; a paid-model switch is an opencode.jso
 1. `bash -e scripts/validate.sh` prints a PASS summary and exits 0.
 2. `.github/workflows/validate.yml` exists and remains code-only (validates file presence).
 3. `docs/WORKFLOW.md` documents all 10 steps with agent-per-step mapping and done-criteria.
-4. `docs/SKILLS.md` enumerates skill groups (≈94 skills).
+4. `docs/SKILLS.md` enumerates skill groups (≈94 skills — 81 active + 13 archived).
 5. `docs/OPENCODE_LAYOUT.md` tree matches actual repo layout.
 6. SPEC/ROADMAP/TASKS exist at root; consistent with each other and with templates/.
 7. `.rtk/filters.toml` follows schema_version=1 with [filters.X] blocks.
@@ -65,4 +65,4 @@ Rules: agent files never override models; a paid-model switch is an opencode.jso
 ## Notes
 - Vercel deploy of site/ is optional/blocked: requires the user to provide a Vercel token.
 - Paid models can later be swapped in only via opencode.json — never via agent files.
-- The Titus workflow is a port of https://github.com/ChrisTitusTech/titus-ai for OpenCode; free-tier only.
+- The m3j workflow (docs/OPENCODE_LAYOUT.md) drives development; it runs entirely on free-tier models.

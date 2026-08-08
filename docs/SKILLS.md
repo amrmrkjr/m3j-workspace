@@ -2,7 +2,7 @@
 
 Per-project skill library (81 active skills, one directory per skill, each with a `SKILL.md`). Path is `.agents/skills/`, not `~/.agents/skills/`; retired skills live under `.agents/archive/skills/`. This index is complete so you can find the right skill fast; then read the skill's `description` frontmatter for exact triggers.
 
-★ = used by the Titus workflow (the primary development process, see `docs/WORKFLOW.md`).
+★ = used by the m3j workflow (the primary development process, see `docs/WORKFLOW.md`).
 
 ## Core workflow & gates ★
 - `executing-plans` — execute written implementation plans with review checkpoints
@@ -86,4 +86,4 @@ Per-project skill library (81 active skills, one directory per skill, each with 
 
 1. Find a likely group here (retired skills live under `.agents/archive/skills/`).
 2. Open `.agents/skills/<name>/SKILL.md` for the skill's own instructions.
-3. Skills marked ★ are wired into `docs/WORKFLOW.md` — the Titus pipeline dispatches them per step; the rest load on demand.
+3. Skills marked ★ are wired into `docs/WORKFLOW.md` — the m3j pipeline dispatches them per step; the rest load on demand.

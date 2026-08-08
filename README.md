@@ -82,25 +82,25 @@ Defined in `.opencode/commands/finish.md`, delegated to `m3j-sentinel`. Runs bef
 
 All skills live under `.agents/skills/` — loaded per-project via `opencode.json`, isolated from global state. Retired skills move to `.agents/archive/skills/` (git history preserved).
 
-**Design & frontend:** algorithmic-art, brand-guidelines, brandkit, canvas-design, design-taste-frontend, gpt-taste, high-end-visual-design, impeccable, industrial-brutalist-ui, minimalist-ui, redesign-existing-projects, stitch-design-taste, web-quality-audit
+**Design & frontend:** algorithmic-art, brand-guidelines, brandkit, canvas-design, design-taste-frontend, gpt-taste, high-end-visual-design, impeccable, industrial-brutalist-ui, minimalist-ui, redesign-existing-projects, web-quality-audit
 
-**Development & architecture:** codebase-design, design-an-interface, domain-modeling, improving-codebase-architecture, shadcn, vercel-composition-patterns, vercel-react-best-practices, vercel-react-native-skills, vercel-react-view-transitions
+**Development & architecture:** codebase-design, design-an-interface, domain-modeling, improve-codebase-architecture, shadcn, vercel-composition-patterns, vercel-react-best-practices, vercel-react-native-skills, vercel-react-view-transitions
 
-**Testing & QA:** tdd, test-driven-development, webapp-testing, diagnosing-bugs, systematic-debugging, security-review, code-review, receiving-code-review, requesting-code-review
+**Testing & QA:** test-driven-development, webapp-testing, diagnosing-bugs, systematic-debugging, security-review, code-review, receiving-code-review, requesting-code-review
 
 **Writing & docs:** doc-coauthoring, edit-article, internal-comms, writing-beats, writing-fragments, writing-great-skills, writing-guidelines, writing-plans, writing-shape, writing-skills
 
 **AI & APIs:** claude-api, mcp-builder, research, find-skills
 
-**Project management:** brainstorming, implement, to-issues, to-prd, triage, wayfinder, wizard, qa
+**Project management:** brainstorming, implement, request-refactor-plan, to-issues, to-prd, triage, wayfinder, wizard, qa
 
-**Execution & delivery:** dispatching-parallel-agents, executing-plans, finishing-a-development-branch, handoff, subagent-driven-development, verification-before-completion, using-git-worktrees
+**Execution & delivery:** dispatching-parallel-agents, executing-plans, finishing-a-development-branch, handoff, m3j-workflow, resolving-merge-conflicts, subagent-driven-development, verification-before-completion, using-git-worktrees
 
 **Documents & media:** docx, pdf, pptx, xlsx, slack-gif-creator
 
 **Infrastructure:** deploy-to-vercel, vercel-cli-with-tokens, vercel-optimize, setup-pre-commit, git-guardrails-claude-code, skill-creator
 
-**Other:** grilling, grill-me, loop-me, obsidian-vault, scaffold-exercises, setup-matt-pocock-skills, teach, template-skill, theme-factory, ubiquitous-language
+**Other:** grilling, grill-me, loop-me, obsidian-vault, scaffold-exercises, setup-matt-pocock-skills, teach, theme-factory, ubiquitous-language
 
 ---
 
@@ -108,18 +108,31 @@ All skills live under `.agents/skills/` — loaded per-project via `opencode.jso
 
 ```
 m3j-workspace/
-├── .agents/skills/       # 81 active skills (+13 archived)
+├── .agents/
+│   ├── skills/            # 81 active skills (+13 archived)
+│   └── archive/skills/    # retired skills (git history preserved)
 ├── .opencode/
-│   ├── agents/           # 16 custom agent definitions
-│   └── commands/         # built-in /finish command
-├── site/                 # static reference guide (HTML/CSS/JS)
-│   ├── agents.html       # agent fleet showcase
-│   ├── index.html        # homepage
-│   ├── setup.html        # optimization recipes
-│   ├── reference.html    # annotated config + paths
-│   └── termux.html       # Android setup guide
-├── opencode.json         # project-level config
-└── AGENTS.md             # agent hierarchy and dispatch rules
+│   ├── agents/            # 16 custom agent definitions
+│   └── commands/          # built-in /finish command
+├── .github/               # CI workflows + PR template
+├── .rtk/                  # RTK output filters (filters.toml)
+├── docs/                  # agent-facing docs (layout, skills index, workflow)
+├── scripts/
+│   └── validate.sh        # local CI mirror + nav-sync check
+├── site/                  # static reference guide (HTML/CSS/JS)
+│   ├── index.html         # homepage
+│   ├── setup.html         # optimization recipes
+│   ├── termux.html        # Android setup guide
+│   ├── reference.html     # annotated config + paths
+│   ├── agents.html        # agent fleet showcase
+│   ├── workflow.html      # AI coding workflow
+│   ├── trading.html       # trading hub
+│   ├── style.css          # design system
+│   └── script.js          # theme toggle, scroll reveal
+├── opencode.json          # project-level config
+├── AGENTS.md              # agent hierarchy and dispatch rules
+├── SPEC.md · ROADMAP.md · TASKS.md   # m3j-workflow working files (root)
+└── LICENSE                # MIT
 ```
 
 ---

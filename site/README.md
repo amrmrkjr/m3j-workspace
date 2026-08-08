@@ -1,4 +1,4 @@
-# opencode setup
+# m3j-workspace · reference site
 
 A lean reference guide for running OpenCode — configuration tuning, database maintenance, agent/skills management, and Android setup. Built from real sessions, not theory.
 
@@ -19,7 +19,7 @@ open site/index.html
 | **Reference** | Annotated global config with explanations, all key file paths, `.gitignore` patterns for OpenCode artifacts |
 | **Termux** | OpenCode on Android via Termux — native install, no root |
 | **Agents** | Full agent fleet roster with dispatch hierarchy, model assignments, and workflow explanation |
-| **Workflow** | Titus AI coding workflow port — SPEC → ROADMAP → TASKS pipeline, test-first scaffolding, quality gates, one PR per phase on free-tier models |
+| **Workflow** | AI coding workflow — SPEC → ROADMAP → TASKS pipeline, test-first scaffolding, quality gates, one PR per phase on free-tier models |
 
 ## Structure
 

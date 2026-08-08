@@ -3,7 +3,7 @@ name: m3j-workflow
 description: >-
   Orchestrate a full AI coding workflow end-to-end — SPEC, ROADMAP, TASKS,
   test-first scaffolding, one-phase execution, quality gates, one small PR, and
-  fresh-context review — free-tier models only. Use when the user says "Titus
+  fresh-context review — free-tier models only. Use when the user says "m3j
   workflow", "AI coding workflow", wants a spec→roadmap→tasks pipeline, or asks
   to build something end-to-end with quality gates and one reviewable change
   per PR.
@@ -11,7 +11,7 @@ description: >-
 
 # M3j Workflow (free-tier port)
 
-Port of Chris Titus's AI coding workflow (github.com/ChrisTitusTech/titus-ai) for OpenCode, free-tier models only. The pipeline turns an idea into a reviewed, mergeable PR through small phases — each phase ships as one reviewable change.
+An end-to-end AI coding workflow for OpenCode — free-tier models only. The pipeline turns an idea into a reviewed, mergeable PR through small phases — each phase ships as one reviewable change.
 
 ## Principles
 
