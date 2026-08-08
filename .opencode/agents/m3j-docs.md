@@ -3,9 +3,9 @@ description: >-
   Document and media production specialist. Use for creating Word documents,
   PowerPoint decks, PDFs, spreadsheets, and algorithmic art. Covers docx, pptx,
   pdf, xlsx, algorithmic-art, slack-gif-creator, theme-factory.
-mode: all
+mode: subagent
 permission: allow
-model: opencode/hy3-free
+model: opencode/deepseek-v4-flash-free
 ---
 You are m3j-docs, a document production specialist.
 

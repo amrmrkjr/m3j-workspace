@@ -1,13 +1,13 @@
 <p align="center">
   <a href="https://github.com/amrmrkjr/opencode-setup"><img src="https://img.shields.io/github/stars/amrmrkjr/opencode-setup?style=for-the-badge&logo=github&label=Stars&color=facc15&labelColor=1a1a2e" alt="Stars"></a>
   <a href="https://github.com/amrmrkjr/opencode-setup/actions"><img src="https://img.shields.io/github/actions/workflow/status/amrmrkjr/opencode-setup/ci.yml?style=for-the-badge&logo=github-actions&label=CI&color=22c55e&labelColor=1a1a2e" alt="CI"></a>
-  <img src="https://img.shields.io/badge/skills-98-a855f7?style=for-the-badge&labelColor=1a1a2e" alt="Skills">
+  <img src="https://img.shields.io/badge/skills-81%20(%2B13%20archived)-a855f7?style=for-the-badge&labelColor=1a1a2e" alt="Skills">
   <img src="https://img.shields.io/badge/agents-16-06b6d4?style=for-the-badge&labelColor=1a1a2e" alt="Agents">
   <img src="https://img.shields.io/badge/license-MIT-64748b?style=for-the-badge&labelColor=1a1a2e" alt="License">
 </p>
 
 <h1 align="center">opencode-setup</h1>
-<p align="center"><b>Production OpenCode workspace — 98 skills, 16 agents, built-in quality gate.</b></p>
+<p align="center"><b>Production OpenCode workspace — 81 skills (+13 archived), 16 agents, built-in quality gate.</b></p>
 
 <p align="center">
   <a href="#quick-start">quick start</a> &middot;
@@ -78,11 +78,11 @@ Defined in `.opencode/commands/finish.md`, delegated to `m3j-sentinel`. Runs bef
 
 ---
 
-## Skills (98)
+## Skills (81, +13 archived)
 
-All skills live under `.agents/skills/` — loaded per-project via `opencode.json`, isolated from global state.
+All skills live under `.agents/skills/` — loaded per-project via `opencode.json`, isolated from global state. Retired skills move to `.agents/archive/skills/` (git history preserved).
 
-**Design & frontend:** algorithmic-art, brand-guidelines, brandkit, canvas-design, design-taste-frontend, frontend-design, gpt-taste, high-end-visual-design, image-to-code, impeccable, industrial-brutalist-ui, minimalist-ui, redesign-existing-projects, stitch-design-taste, web-design-guidelines, web-quality-audit
+**Design & frontend:** algorithmic-art, brand-guidelines, brandkit, canvas-design, design-taste-frontend, gpt-taste, high-end-visual-design, impeccable, industrial-brutalist-ui, minimalist-ui, redesign-existing-projects, stitch-design-taste, web-quality-audit
 
 **Development & architecture:** codebase-design, design-an-interface, domain-modeling, improving-codebase-architecture, shadcn, vercel-composition-patterns, vercel-react-best-practices, vercel-react-native-skills, vercel-react-view-transitions
 
@@ -92,15 +92,15 @@ All skills live under `.agents/skills/` — loaded per-project via `opencode.jso
 
 **AI & APIs:** claude-api, mcp-builder, research, find-skills
 
-**Project management:** brainstorming, implement, prototype, to-issues, to-prd, triage, wayfinder, wizard, qa
+**Project management:** brainstorming, implement, to-issues, to-prd, triage, wayfinder, wizard, qa
 
-**Execution & delivery:** dispatching-parallel-agents, executing-plans, finishing-a-development-branch, handoff, subagent-driven-development, verification-before-completion, using-git-worktrees, claude-handoff
+**Execution & delivery:** dispatching-parallel-agents, executing-plans, finishing-a-development-branch, handoff, subagent-driven-development, verification-before-completion, using-git-worktrees
 
-**Documents & media:** docx, pdf, pptx, xlsx, slack-gif-creator, imagegen-frontend-web, imagegen-frontend-mobile
+**Documents & media:** docx, pdf, pptx, xlsx, slack-gif-creator
 
 **Infrastructure:** deploy-to-vercel, vercel-cli-with-tokens, vercel-optimize, setup-pre-commit, git-guardrails-claude-code, skill-creator
 
-**Other:** ask-matt, full-output-enforcement, grilling, grill-me, grill-with-docs, loop-me, migrate-to-shoehorn, obsidian-vault, scaffold-exercises, setup-matt-pocock-skills, teach, template-skill, theme-factory, ubiquitous-language
+**Other:** grilling, grill-me, loop-me, obsidian-vault, scaffold-exercises, setup-matt-pocock-skills, teach, template-skill, theme-factory, ubiquitous-language
 
 ---
 
@@ -108,7 +108,7 @@ All skills live under `.agents/skills/` — loaded per-project via `opencode.jso
 
 ```
 opencode-setup/
-├── .agents/skills/       # 98 specialized skills
+├── .agents/skills/       # 81 active skills (+13 archived)
 ├── .opencode/
 │   ├── agents/           # 16 custom agent definitions
 │   └── commands/         # built-in /finish command

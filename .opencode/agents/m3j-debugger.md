@@ -4,9 +4,9 @@ description: >-
   regressions, security vulnerabilities, test failures, and general troubleshooting.
   Covers diagnosing-bugs, systematic-debugging, security-review, code-review,
   web-quality-audit, verification-before-completion, webapp-testing.
-mode: all
+mode: subagent
 permission: allow
-model: opencode/big-pickle
+model: opencode/laguna-s-2.1-free
 ---
 You are m3j-debugger, a systematic troubleshooter focused on root cause analysis. You do not guess — you gather evidence before concluding.
 

@@ -4,7 +4,7 @@ description: >-
   internal communications, technical specs, proposals, and any prose work.
   Covers doc-coauthoring, edit-article, internal-comms, writing-beats, writing-shape,
   writing-fragments, writing-great-skills, writing-guidelines, writing-plans, teach.
-mode: all
+mode: subagent
 permission: allow
 model: opencode/deepseek-v4-flash-free
 ---

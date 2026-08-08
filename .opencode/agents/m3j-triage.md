@@ -4,9 +4,9 @@ description: >-
   requesting and receiving code reviews, planning refactors, breaking work into
   issues, and managing the review workflow. Covers triage, requesting-code-review,
   receiving-code-review, request-refactor-plan, to-issues.
-mode: all
+mode: subagent
 permission: allow
-model: opencode/nemotron-3-ultra-free
+model: opencode/longcat-2.0-free
 ---
 You are m3j-triage. You manage issues and reviews so work stays organized.
 

@@ -1,0 +1,92 @@
+# Project-local RTK filters — commit this file with your repo.
+# Adapted from ChrisTitusTech/titus-ai (.rtk/filters.toml) for OpenCode usage.
+# Filters here override user-global and built-in filters.
+# Docs: https://github.com/rtk-ai/rtk#custom-filters
+schema_version = 1
+
+# --- general: git / fs ---
+
+[filters.git-status]
+description = "Compact git status"
+match_command = "^git\\s+status"
+strip_ansi = true
+max_lines = 40
+on_empty = "git: working tree clean"
+
+[filters.git-log]
+description = "Trim git log lines"
+match_command = "^git\\s+log"
+strip_ansi = true
+max_lines = 25
+
+[filters.git-diff]
+description = "Cap git diff output"
+match_command = "^git\\s+diff"
+strip_ansi = true
+max_lines = 200
+
+[filters.ls-trees]
+description = "Cap directory listing noise"
+match_command = "^(ls|ll|ls\\s*-)"
+strip_ansi = true
+max_lines = 60
+
+[filters.grep-find]
+description = "Cap recursive search output (grep -r, find)"
+match_command = "^(grep|rg|find)\\s+.*(-r|--recursive|-type)"
+strip_ansi = true
+max_lines = 80
+
+# --- general: test / build / network ---
+
+[filters.bun-test]
+description = "Compact bun test output"
+match_command = "^bun\\s+test"
+strip_ansi = true
+strip_lines_matching = ["^\\s*$"]
+max_lines = 40
+on_empty = "bun test: ok"
+
+[filters.npm-test]
+description = "Compact npm test output"
+match_command = "^npm\\s+(test|run\\s+test)"
+strip_ansi = true
+strip_lines_matching = ["^\\s*$"]
+max_lines = 40
+
+[filters.npm-build]
+description = "Cap npm run build output to the result tail"
+match_command = "^npm\\s+run\\s+(build|typecheck|lint)"
+strip_ansi = true
+strip_lines_matching = ["^\\s*$", "^npm\\s+(warn|notice)"]
+max_lines = 50
+
+[filters.curl]
+description = "Collapse curl API hits (json, -s) to status and body sizes"
+match_command = "^curl\\s"
+strip_ansi = true
+strip_lines_matching = ["^\\s*$"]
+max_lines = 30
+
+# --- opencode-specific ---
+
+[filters.opencode-run]
+description = "Cap non-interactive opencode run output"
+match_command = "^opencode\\s+run"
+strip_ansi = true
+strip_lines_matching = ["^\\s*$", "^\\s*┃", "^> Also check out", "^Planning|^Reading|^Writing|^Searching"]
+max_lines = 60
+on_empty = "opencode run: done, no output"
+
+[filters.opencode-agent]
+description = "Cap opencode agent subtask output"
+match_command = "^opencode\\s+agent"
+strip_ansi = true
+strip_lines_matching = ["^\\s*$"]
+max_lines = 60
+
+[filters.node-scripts]
+description = "Cap ad-hoc node script output"
+match_command = "^node\\s"
+strip_ansi = true
+max_lines = 80

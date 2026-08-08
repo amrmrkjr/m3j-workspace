@@ -4,7 +4,7 @@ description: >-
   git guardrails, CI/CD, interactive setup wizards, merge conflict resolution,
   and project scaffolding. Covers setup-pre-commit, git-guardrails-claude-code,
   wizard, resolving-merge-conflicts, setup-matt-pocock-skills.
-mode: all
+mode: subagent
 permission: allow
 model: opencode/deepseek-v4-flash-free
 ---

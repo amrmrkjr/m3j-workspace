@@ -5,7 +5,7 @@ description: >-
   and Vercel CLI operations. Covers deploy-to-vercel, vercel-cli-with-tokens,
   vercel-optimize, vercel-react-best-practices, vercel-composition-patterns,
   vercel-react-native-skills, vercel-react-view-transitions.
-mode: all
+mode: subagent
 permission: allow
 model: opencode/deepseek-v4-flash-free
 ---

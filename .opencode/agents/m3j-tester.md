@@ -4,7 +4,7 @@ description: >-
   debugging test failures, QA sessions, and browser-based testing. Covers tdd,
   test-driven-development, qa, webapp-testing, verification-before-completion,
   scaffold-exercises.
-mode: all
+mode: subagent
 permission: allow
 model: opencode/north-mini-code-free
 ---

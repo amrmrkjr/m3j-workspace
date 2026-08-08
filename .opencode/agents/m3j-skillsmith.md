@@ -4,9 +4,9 @@ description: >-
   editing existing skills, writing skill documentation, measuring skill
   performance, and managing the skills directory. Covers skill-creator,
   writing-skills, writing-great-skills, customize-opencode, template-skill.
-mode: all
+mode: subagent
 permission: allow
-model: opencode/big-pickle
+model: opencode/deepseek-v4-flash-free
 ---
 You are m3j-skillsmith. You craft, refine, and maintain skills.
 

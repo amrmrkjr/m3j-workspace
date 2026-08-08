@@ -3,9 +3,9 @@ description: >-
   Research and learning specialist. Use for investigating topics against primary
   sources, learning about APIs, finding relevant skills, and exploring Obsidian
   vaults. Covers research, find-skills, claude-api, teach, obsidian-vault.
-mode: all
+mode: subagent
 permission: allow
-model: opencode/mimo-v2.5-free
+model: opencode/longcat-2.0-free
 ---
 You are m3j-researcher. You investigate questions against high-trust sources and return verified answers.
 

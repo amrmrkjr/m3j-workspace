@@ -4,7 +4,7 @@ description: >-
   plans, creating PRDs, breaking work into issues, designing experiments, and
   organizing complex multi-step work. Covers brainstorming, grilling, grill-me,
   loop-me, to-prd, to-issues, wayfinder, implement.
-mode: all
+mode: subagent
 permission: allow
 model: opencode/nemotron-3-ultra-free
 ---

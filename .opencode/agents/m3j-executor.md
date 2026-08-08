@@ -5,7 +5,7 @@ description: >-
   branches to completion, and handing off work. Covers executing-plans,
   subagent-driven-development, dispatching-parallel-agents, using-git-worktrees,
   finishing-a-development-branch, handoff, verification-before-completion.
-mode: all
+mode: subagent
 permission: allow
 model: opencode/deepseek-v4-flash-free
 ---
