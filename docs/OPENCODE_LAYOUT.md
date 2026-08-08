@@ -45,7 +45,7 @@ opencode_setup/
 | `.agents/skills/` | Skill library | ~94 per-project skills, one dir per skill with `SKILL.md`. Path is per-project (`.agents/skills/`), not `~/.agents/`. Indexed in `docs/SKILLS.md`. |
 | `docs/` | Agent-facing docs | Layout (this), skills index, workflow. Keep terse, table-heavy — agents read them. |
 | `site/` | Static reference guide | 7 HTML pages sharing one nav partial (home → setup → termux → reference → agents → workflow → trading). Design language: bento grid, double-bezel cards. Adding/removing a page = update every nav + homepage card grid. |
-| `.github/workflows/validate.yml` | CI | Existence checks only (agent files, site pages, config, titus skill + templates). No builds, no tests. Keep it code-only. |
+| `.github/workflows/validate.yml` | CI | Existence checks only (agent files, site pages, config, m3j-workflow skill + templates). No builds, no tests. Keep it code-only. |
 | `.rtk/filters.toml` | RTK output filters | `schema_version = 1`; `[filters.X]` blocks with `match_command`, `strip_ansi`, `max_lines`, `on_empty`. |
 | `scripts/validate.sh` | Local gate | Mirrors CI plus nav-sync check. Run before claiming done (`bash -e scripts/validate.sh`). |
 

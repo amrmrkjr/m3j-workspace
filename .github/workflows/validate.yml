@@ -19,9 +19,9 @@ jobs:
         run: |
           [ -f opencode.json ] && echo "✅ opencode.json" || echo "❌ opencode.json"
           [ -f AGENTS.md ] && echo "✅ AGENTS.md" || echo "❌ AGENTS.md"
-      - name: Check titus-workflow skill
+      - name: Check m3j-workflow skill
         run: |
-          [ -f .agents/skills/titus-workflow/SKILL.md ] && echo "✅ .agents/skills/titus-workflow/SKILL.md" || echo "❌ .agents/skills/titus-workflow/SKILL.md"
-          for f in .agents/skills/titus-workflow/templates/*.md; do
+          [ -f .agents/skills/m3j-workflow/SKILL.md ] && echo "✅ .agents/skills/m3j-workflow/SKILL.md" || echo "❌ .agents/skills/m3j-workflow/SKILL.md"
+          for f in .agents/skills/m3j-workflow/templates/*.md; do
             [ -f "$f" ] && echo "✅ $f" || echo "❌ $f"
           done

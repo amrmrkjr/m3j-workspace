@@ -14,7 +14,7 @@ Per-project skill library (81 active skills, one directory per skill, each with 
 - `requesting-code-review` / `receiving-code-review` — ask for; verify feedback is sound before implementing
 - `code-review` — standards + spec review in parallel
 - `handoff` — compact conversation handoffs
-- `titus-workflow` — the 10-step pipeline itself (SPEC → ROADMAP → TASKS → one PR per phase)
+- `m3j-workflow` — the 10-step pipeline itself (SPEC → ROADMAP → TASKS → one PR per phase)
 
 ## Engineering & planning
 - `brainstorming` — exploration before building (creative work)

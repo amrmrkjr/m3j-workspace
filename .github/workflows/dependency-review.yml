@@ -1,0 +1,41 @@
+# Dependency Review Action.
+#
+# This Action will scan the dependency manifest changes in a pull request,
+# preventing a merge if the changes introduce vulnerable dependencies or
+# invalid licenses.
+#
+# NOTE: the repo root currently has NO lockfile (no package-lock.json at "/").
+# The only lockfile in the tree is .opencode/package-lock.json, which is
+# outside this action's default scope (it only analyzes the dependency diff
+# for manifests it can locate in the default working directory). Until a
+# root-level lockfile lands (e.g. once Dependabot starts managing a root
+# package.json + package-lock.json), this action finds no dependency diff and
+# is effectively a no-op pass. Re-evaluate fail-on-severity once lockfiles
+# exist at the root.
+#
+# Official template permissions: contents read (to check out and analyze),
+# pull-requests write (to post the dependency review on the PR).
+name: "Dependency Review"
+on: [pull_request]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v4
+
+      - name: "Dependency Review"
+        uses: actions/dependency-review-action@v4
+        with:
+          # No fail-on-severity: it would fail every PR while no root-level
+          # lockfile exists (the "diff" is empty and the dependency graph is
+          # unpopulated at the root). Uncomment once lockfiles land:
+          # fail-on-severity: high
+          #
+          # Deny-license policy (optional, once lockfiles exist):
+          # deny-licenses: GPL-1.0-or-later, LGPL-2.0-or-later

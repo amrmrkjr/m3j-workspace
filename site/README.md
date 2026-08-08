@@ -30,7 +30,7 @@ site/
 ├── reference.html   # annotated config + paths
 ├── termux.html      # Android / Termux guide
 ├── agents.html      # agent fleet showcase
-├── workflow.html    # end-to-end AI coding pipeline (titus-workflow)
+├── workflow.html    # end-to-end AI coding pipeline (m3j-workflow)
 ├── style.css        # Ethereal Glass theme
 └── script.js        # theme toggle, scroll reveal
 ```

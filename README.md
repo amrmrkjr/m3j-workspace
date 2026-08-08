@@ -1,12 +1,12 @@
 <p align="center">
-  <a href="https://github.com/amrmrkjr/opencode-setup"><img src="https://img.shields.io/github/stars/amrmrkjr/opencode-setup?style=for-the-badge&logo=github&label=Stars&color=facc15&labelColor=1a1a2e" alt="Stars"></a>
-  <a href="https://github.com/amrmrkjr/opencode-setup/actions"><img src="https://img.shields.io/github/actions/workflow/status/amrmrkjr/opencode-setup/ci.yml?style=for-the-badge&logo=github-actions&label=CI&color=22c55e&labelColor=1a1a2e" alt="CI"></a>
+  <a href="https://github.com/amrmrkjr/m3j-workspace"><img src="https://img.shields.io/github/stars/amrmrkjr/m3j-workspace?style=for-the-badge&logo=github&label=Stars&color=facc15&labelColor=1a1a2e" alt="Stars"></a>
+  <a href="https://github.com/amrmrkjr/m3j-workspace/actions"><img src="https://img.shields.io/github/actions/workflow/status/amrmrkjr/m3j-workspace/validate.yml?style=for-the-badge&logo=github-actions&label=CI&color=22c55e&labelColor=1a1a2e" alt="CI"></a>
   <img src="https://img.shields.io/badge/skills-81%20(%2B13%20archived)-a855f7?style=for-the-badge&labelColor=1a1a2e" alt="Skills">
   <img src="https://img.shields.io/badge/agents-16-06b6d4?style=for-the-badge&labelColor=1a1a2e" alt="Agents">
   <img src="https://img.shields.io/badge/license-MIT-64748b?style=for-the-badge&labelColor=1a1a2e" alt="License">
 </p>
 
-<h1 align="center">opencode-setup</h1>
+<h1 align="center">m3j-workspace</h1>
 <p align="center"><b>Production OpenCode workspace — 81 skills (+13 archived), 16 agents, built-in quality gate.</b></p>
 
 <p align="center">
@@ -22,8 +22,8 @@
 ## Quick start
 
 ```bash
-git clone https://github.com/amrmrkjr/opencode-setup.git
-cd opencode-setup
+git clone https://github.com/amrmrkjr/m3j-workspace.git
+cd m3j-workspace
 open site/index.html          # reference guide
 opencode .                     # launch workspace
 ```
@@ -107,7 +107,7 @@ All skills live under `.agents/skills/` — loaded per-project via `opencode.jso
 ## Structure
 
 ```
-opencode-setup/
+m3j-workspace/
 ├── .agents/skills/       # 81 active skills (+13 archived)
 ├── .opencode/
 │   ├── agents/           # 16 custom agent definitions
@@ -125,11 +125,11 @@ opencode-setup/
 ---
 
 <p align="center">
-  <a href="https://github.com/amrmrkjr/opencode-setup">GitHub</a>
+  <a href="https://github.com/amrmrkjr/m3j-workspace">GitHub</a>
   &middot;
   <a href="site/index.html">Reference Guide</a>
   &middot;
   <a href="site/agents.html">Agent Showcase</a>
   &middot;
-  <a href="https://github.com/amrmrkjr/opencode-setup/issues">Issues</a>
+  <a href="https://github.com/amrmrkjr/m3j-workspace/issues">Issues</a>
 </p>

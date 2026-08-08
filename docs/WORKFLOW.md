@@ -1,6 +1,6 @@
 # Workflow
 
-Source of truth: the 10-step Titus-workflow pipeline, ported for OpenCode free-tier models. Full skill: `.agents/skills/titus-workflow/SKILL.md`. Working files live at the **project root** — `SPEC.md`, `ROADMAP.md`, `TASKS.md` — generated from `templates/` (`templates/SPEC.md`, `templates/ROADMAP.md`, `templates/TASKS.md` under `.agents/skills/titus-workflow/`). Run steps in order; each step's done-criterion gates the next.
+Source of truth: the 10-step Titus-workflow pipeline, ported for OpenCode free-tier models. Full skill: `.agents/skills/m3j-workflow/SKILL.md`. Working files live at the **project root** — `SPEC.md`, `ROADMAP.md`, `TASKS.md` — generated from `templates/` (`templates/SPEC.md`, `templates/ROADMAP.md`, `templates/TASKS.md` under `.agents/skills/m3j-workflow/`). Run steps in order; each step's done-criterion gates the next.
 
 ## The pipeline
 

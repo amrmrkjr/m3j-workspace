@@ -4,7 +4,7 @@ Real milestones in priority order. No dates — status only. Each milestone is o
 
 ## Phase 1 — Port complete (current ✅)
 **Deliverables:**
-- [x] `titus-workflow` skill ported into `.agents/skills/titus-workflow/` (SKILL.md + templates/SPEC.md, ROADMAP.md, TASKS.md)
+- [x] `m3j-workflow` skill ported into `.agents/skills/m3j-workflow/` (SKILL.md + templates/SPEC.md, ROADMAP.md, TASKS.md)
 - [x] Agent fleet: 16 `m3j-*` + `ultra-minimal` under `.opencode/agents/`
 - [x] `/finish` 7-step quality gate command at `.opencode/commands/finish.md`
 - [x] Static site: 7 pages with shared nav (home → setup → termux → reference → agents → workflow → trading)
