@@ -38,7 +38,7 @@ jobs:
 
       - name: "Dependency Review"
         if: steps.manifests.outputs.manifest == 'true'
-        uses: actions/dependency-review-action@v4
+        uses: actions/dependency-review-action@v5
         # No `with:` options: the dependency diff is empty while no root
         # lockfile exists and the GitHub dependency graph for this repo is
         # unpopulated — the action would error on every PR. Uncomment once
