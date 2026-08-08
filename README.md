@@ -30,6 +30,14 @@ opencode .                     # launch workspace
 
 No build step. No dependencies. Open `site/index.html` in any browser for the full reference guide.
 
+### Development
+
+`main` is directly pushable — no PR required. Commits are validated in CI; force-pushes and branch deletion are blocked.
+
+```bash
+git commit -am "your change" && git push origin main
+```
+
 ---
 
 ## Agent roster
