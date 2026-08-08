@@ -5,16 +5,10 @@
 # invalid licenses.
 #
 # NOTE: the repo root currently has NO lockfile (no package-lock.json at "/").
-# The only lockfile in the tree is .opencode/package-lock.json, which is
-# outside this action's default scope (it only analyzes the dependency diff
-# for manifests it can locate in the default working directory). Until a
-# root-level lockfile lands (e.g. once Dependabot starts managing a root
-# package.json + package-lock.json), this action finds no dependency diff and
-# is effectively a no-op pass. Re-evaluate fail-on-severity once lockfiles
-# exist at the root.
-#
-# Official template permissions: contents read (to check out and analyze),
-# pull-requests write (to post the dependency review on the PR).
+# The only lockfile in the tree is .opencode/package-lock.json, which GitHub's
+# dependency graph does not ingest, so the review step is gated on a root
+# manifest actually existing. Until one lands (e.g. once a root package.json +
+# package-lock.json exists), this workflow degrades to a green no-op.
 name: "Dependency Review"
 
 on:
@@ -32,10 +26,25 @@ jobs:
       - name: "Checkout Repository"
         uses: actions/checkout@v4
 
+      - name: "Detect root dependency manifest"
+        id: manifests
+        run: |
+          set -euo pipefail
+          found="$(find . -maxdepth 2 \( -name 'package-lock.json' -o -name 'yarn.lock' -o -name 'pnpm-lock.yaml' -o -name 'Cargo.lock' -o -name 'go.sum' -o -name 'poetry.lock' -o -name 'requirements.txt' \) -not -path './.opencode/*' -not -path './.agents/*' -not -path './.rtk/*' | head -n 1)" || true
+          if [ -n "$found" ]; then
+            echo "manifest=true" >> "$GITHUB_OUTPUT"
+            echo "found: $found"
+          fi
+
       - name: "Dependency Review"
+        if: steps.manifests.outputs.manifest == 'true'
         uses: actions/dependency-review-action@v4
-        # NOTE: no `with:` options — the dependency diff is empty while no
-        # root-level lockfile exists, so fail-on-severity / deny-licenses
-        # would be unreachable. Add them once lockfiles land:
-        #   fail-on-severity: high
-        #   deny-licenses: GPL-1.0-or-later, LGPL-2.0-or-later
+        with:
+          # No fail-on-severity: the dependency diff is empty while no root
+          # lockfile exists and the GitHub dependency graph for this repo is
+          # unpopulated — the action would error on every PR. Uncomment once
+          # root lockfiles land:
+          # fail-on-severity: high
+          #
+          # Deny-license policy (optional, once lockfiles exist):
+          # deny-licenses: GPL-1.0-or-later, LGPL-2.0-or-later
